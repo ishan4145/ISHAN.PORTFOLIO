@@ -1,0 +1,1324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Ishan Gautam — photographer and filmmaker, Mumbai. Fashion, portraiture, automotive and brand films.">
+<meta property="og:title" content="Ishan Gautam — Photographer & Filmmaker">
+<meta property="og:description" content="Photography and videography portfolio, 2026.">
+<meta property="og:image" content="works/mercedes-amg/1.jpg">
+<meta name="theme-color" content="#0c0c0b">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Ishan Gautam</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: halftone ISHAN hero (name printed in dots, photo revealed under the pointer)
+   → Photography: the project wheel → Videography: a camera monitor over an edit timeline → about + contact. One night palette, two faces, everywhere. */
+:root {
+  --bg: #0c0c0b;          /* night: the page, the hero, the wheel */
+  --sheet: #080807;       /* album + viewer, a step darker */
+  --ink: #e9e4da;         /* all text and the halftone dots */
+  --muted: rgba(233, 228, 218, 0.48);
+  --line: rgba(233, 228, 218, 0.16);
+  --surface: #1a1916;     /* image placeholders */
+  --warm: #e9762b;        /* dots pushed off their place, focus, the one accent */
+  --sans: "Inter Tight", "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--sans); -webkit-font-smoothing: antialiased;
+}
+body.locked { overflow: hidden; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-transform: inherit; letter-spacing: inherit; }
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--warm); color: var(--bg); }
+
+/* the small type used everywhere: tracked mono caps */
+.mono {
+  font-family: var(--mono); font-size: 10.5px; font-weight: 400;
+  letter-spacing: .18em; text-transform: uppercase; line-height: 1.75;
+}
+.ulink {
+  opacity: .78;
+  background-image: linear-gradient(currentColor, currentColor); background-size: 0% 1px;
+  background-repeat: no-repeat; background-position: 0 100%;
+  transition: opacity .25s ease, background-size .35s cubic-bezier(.2,.7,.1,1);
+}
+.ulink:hover { opacity: 1; background-size: 100% 1px; }
+.ulink:focus-visible, button:focus-visible { outline: 1px solid var(--warm); outline-offset: 3px; opacity: 1; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ================= hero: halftone wordmark ================= */
+.hero {
+  /* Sized from the width, capped by the screen: inside an embedding frame the
+     viewport can be as tall as the whole page, so 100vh alone isn't safe. */
+  position: relative; height: 100vh; height: min(100svh, max(520px, 62vw));
+  overflow: hidden; isolation: isolate; scroll-snap-align: start;
+  background: var(--bg); touch-action: pan-y;
+}
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; }
+.hero-top {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: minmax(0, 1.25fr) repeat(3, minmax(0, 1fr)); gap: 24px;
+  padding-top: max(clamp(22px, 3.4vw, 40px), calc(env(safe-area-inset-top, 0px) + 16px));
+  padding-left: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-right, 0px));
+}
+.hero-brand strong { display: block; font-weight: 500; }
+.hero-brand span { opacity: .45; }
+.hero-col h2 { margin: 0; font: inherit; opacity: .4; font-weight: 500; }
+.hero-col ul { list-style: none; margin: 0; padding: 0; }
+.hero-col .plain { opacity: .78; user-select: all; }
+.hero-rule {
+  position: relative; z-index: 1;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  margin: clamp(18px, 2.6vw, 30px) max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-right, 0px)) 0 max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-left, 0px));
+  padding-top: 12px; border-top: 0.5px solid var(--line);
+}
+.hero-rule .hint { opacity: .45; }
+@media (max-width: 720px) {
+  .hero { height: min(100svh, max(440px, 64vw + 230px)); }
+  .hero-top { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); row-gap: 18px; }
+  .hero-brand { grid-column: 1 / -1; }
+}
+
+/* ================= works: the wheel ================= */
+.works {
+  position: relative; height: 100vh; height: min(100svh, max(560px, 62vw));
+  overflow: clip; scroll-snap-align: start;
+  user-select: none; -webkit-user-select: none;
+  border-top: 0.5px solid var(--line);
+}
+.stage { position: absolute; inset: 0; z-index: 0; cursor: grab; touch-action: pan-y; outline: none; }
+.stage:active { cursor: grabbing; }
+.stage:focus-visible { outline: 1px solid var(--warm); outline-offset: -6px; }
+.wheel { position: absolute; top: 50%; left: 50%; transform-style: preserve-3d; }
+.card { position: absolute; display: block; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.face {
+  position: relative; display: block; width: 100%; height: 100%;
+  overflow: hidden; border-radius: 6px; background: var(--surface);
+  box-shadow: 0 18px 40px -18px rgba(233, 228, 218, 0.12);
+}
+.face img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.pill {
+  position: absolute; right: 12px; bottom: 12px;
+  display: flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px;
+  background: rgba(12, 12, 11, 0.8); color: var(--ink);
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  opacity: 0; transform: translateY(4px); transition: opacity .25s, transform .25s; pointer-events: none;
+}
+.card.front .pill { opacity: 1; transform: none; }
+@media (hover: hover) {
+  .card.front .pill { opacity: 0; transform: translateY(4px); }
+  .card.front:hover .pill { opacity: 1; transform: none; }
+}
+.pill svg { width: 9px; height: 9px; }
+.ring-label {
+  position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none;
+  font-weight: 400; letter-spacing: -0.035em;
+}
+.front-title {
+  position: absolute; top: 50%; left: 8%; max-width: 22%; transform: translateY(-50%);
+  pointer-events: none; opacity: 0;
+}
+.front-title .name { font-weight: 400; line-height: 1.02; letter-spacing: -0.035em; text-wrap: balance; }
+.front-title .meta { margin-top: 1.2em; color: var(--muted); line-height: 1.5; font-size: 14px; max-width: 30ch; }
+.front-title .count { margin-top: 0.9em; color: var(--muted); }
+.works-label {
+  position: absolute; z-index: 2;
+  top: max(clamp(22px, 3.4vw, 40px), calc(env(safe-area-inset-top, 0px) + 16px));
+  left: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-left, 0px));
+}
+.works-label span { opacity: .45; }
+.index {
+  position: absolute; z-index: 2;
+  top: max(clamp(22px, 3.4vw, 40px), calc(env(safe-area-inset-top, 0px) + 16px));
+  right: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-right, 0px));
+  list-style: none; margin: 0; padding: 0; text-align: right;
+}
+.index button { opacity: .45; transition: opacity .2s; }
+.index button:hover { opacity: .9; }
+.index button[aria-current="true"] { opacity: 1; }
+.index button[aria-current="true"]::before { content: "● "; color: var(--warm); }
+.works-hint {
+  position: absolute; z-index: 2; pointer-events: none; opacity: .45;
+  bottom: max(clamp(22px, 3.4vw, 40px), calc(env(safe-area-inset-bottom, 0px) + 16px));
+  left: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-left, 0px));
+}
+.works.narrow .front-title {
+  top: auto; bottom: 0; left: 0; right: 0; max-width: none; transform: none; z-index: 200;
+  padding-top: 48px; padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 56px);
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+  background: linear-gradient(to bottom, transparent, var(--bg) 40%);
+}
+.works.narrow .front-title .meta { max-width: none; }
+.works.narrow .index { display: none; }
+.works.narrow .wheel { top: 42%; }
+@media (max-width: 700px) { .works { height: min(100svh, calc(118vw + 240px)); } }
+.works.narrow .works-hint { z-index: 201; }
+
+/* ================= chooser ================= */
+.choose {
+  position: relative; scroll-snap-align: start; border-top: 0.5px solid var(--line);
+  padding-block: clamp(36px, 6vw, 72px);
+  padding-left: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-right, 0px));
+}
+.choose-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: clamp(18px, 2.6vw, 30px); }
+.choose-q { margin: 0; font-size: clamp(1.6rem, 3.6vw, 3rem); font-weight: 300; letter-spacing: -0.035em; line-height: 1.05; }
+.choose-head .mono { opacity: .45; }
+.choose-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(10px, 1.4vw, 18px); }
+.pick {
+  position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; max-height: 62vh; overflow: hidden;
+  border-radius: 6px; background: var(--surface); text-align: left; isolation: isolate;
+  outline: 1px solid transparent; outline-offset: 3px; transition: outline-color .3s;
+}
+.pick img, .pick video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.7,.1,1), filter .6s; filter: brightness(.62) saturate(.9); }
+.pick:hover img, .pick:hover video, .pick:focus-visible img, .pick:focus-visible video { transform: scale(1.04); filter: brightness(.8) saturate(1); }
+.pick::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(12,12,11,.85), rgba(12,12,11,0) 55%); }
+.pick-label { position: absolute; z-index: 1; left: clamp(16px, 2.4vw, 28px); right: clamp(16px, 2.4vw, 28px); bottom: clamp(16px, 2.4vw, 28px); display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+.pick-label strong { display: block; font-weight: 400; font-size: clamp(2rem, 5vw, 4.4rem); letter-spacing: -0.04em; line-height: .95; margin-top: 8px; }
+.pick-label .mono { opacity: .7; }
+.pick-arrow { font-size: clamp(1.4rem, 2.6vw, 2.2rem); font-weight: 300; transition: transform .4s; }
+.pick:hover .pick-arrow { transform: translateX(6px); color: var(--warm); }
+.pick[aria-pressed="true"] { outline-color: var(--warm); }
+.pick:focus-visible { outline-color: var(--warm); }
+@media (max-width: 640px) { .choose-grid { grid-template-columns: minmax(0, 1fr); } .pick { aspect-ratio: 16 / 10; } }
+.works-back { position: absolute; z-index: 202; white-space: nowrap;
+  left: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-left, 0px));
+  top: max(clamp(22px, 3.4vw, 40px), calc(env(safe-area-inset-top, 0px) + 16px)); }
+/* the section label sits one line below the Back control */
+.works .works-label { top: calc(max(clamp(22px, 3.4vw, 40px), calc(env(safe-area-inset-top, 0px) + 16px)) + 30px); }
+.switch { position: absolute; z-index: 202; white-space: nowrap;
+  bottom: max(clamp(22px, 3.4vw, 40px), calc(env(safe-area-inset-bottom, 0px) + 16px));
+  right: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-right, 0px)); }
+.works.narrow .switch { top: max(clamp(22px, 3.4vw, 40px), calc(env(safe-area-inset-top, 0px) + 16px)); bottom: auto; }
+
+/* ================= videography: the filmstrip reel (HeroCarousel, ported) ================= */
+.reel { position: relative; scroll-snap-align: start; border-top: 0.5px solid var(--line); }
+.reel-stage {
+  position: relative; height: 100vh; height: min(100svh, max(600px, 62vw)); width: 100%;
+  overflow: hidden; background: #000; color: #fff; user-select: none; -webkit-user-select: none; outline: none; touch-action: pan-y;
+}
+@media (max-width: 700px) { .reel-stage { height: min(100svh, calc(130vw + 260px)); } }
+.reel-stage:focus-visible { box-shadow: inset 0 0 0 1px rgba(255,255,255,.4); }
+.reel-bg { position: absolute; inset: 0; opacity: 0; transition: opacity .7s ease-out; overflow: hidden; }
+.reel-bg.in { opacity: 1; }
+.reel-bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.42); transition: transform 6s linear; }
+.reel-bg.in img { transform: scale(1.28); }
+.reel-bg .hue { position: absolute; inset: 0; mix-blend-mode: color; }
+.reel-bg .mul { position: absolute; inset: 0; mix-blend-mode: multiply; opacity: .55; }
+.reel-wash { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,.4), transparent 50%, rgba(0,0,0,.45)); pointer-events: none; }
+.reel-grain { position: absolute; inset: 0; opacity: .22; mix-blend-mode: overlay; pointer-events: none; background-size: 180px 180px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.reel-top { position: absolute; left: 0; right: 0; z-index: 3; display: flex; align-items: center; justify-content: center; }
+.reel-top button { opacity: .9; }
+.reel-top button:hover { opacity: 1; }
+.reel-brand { font-weight: 600; letter-spacing: .06em; font-family: var(--sans); }
+.reel-head { position: absolute; left: 0; right: 0; top: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; pointer-events: none; }
+.reel-head-row { display: flex; width: 100%; flex-wrap: wrap; align-items: flex-end; column-gap: 6vw; row-gap: 8px; }
+.reel-title { margin: 0; font-weight: 600; line-height: .88; letter-spacing: -0.03em; }
+.reel-title .ln { display: block; overflow: hidden; padding-bottom: .04em; }
+.reel-title .ln span { display: block; transform: translateY(110%); transition: transform .62s cubic-bezier(.22,1,.36,1); }
+.reel-title.go .ln span { transform: none; }
+.reel-credit { margin: 0; opacity: 0; transition: opacity .5s .1s; }
+.reel-title.go + .reel-credit { opacity: .8; }
+.reel-meta { margin-left: auto; display: flex; align-items: flex-end; flex-wrap: wrap; }
+.reel-meta span { white-space: nowrap; opacity: 0; transform: translateY(6px); transition: opacity .45s, transform .45s; }
+.reel-meta.go span { opacity: .8; transform: none; }
+.reel-strip { position: absolute; left: 0; right: 0; z-index: 2; }
+.reel-track { display: flex; align-items: flex-start; will-change: transform; cursor: grab; transition: transform .7s cubic-bezier(.2,.85,.25,1); }
+.reel-track.dragging { transition: none; cursor: grabbing; }
+.reel-card {
+  position: relative; flex: none; overflow: hidden; background: rgba(255,255,255,.05); padding: 0; border-radius: 0;
+  transition: height .55s cubic-bezier(.2,.85,.25,1);
+}
+.reel-card img, .reel-card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 26%; pointer-events: none; }
+.reel-card::after { content: ""; position: absolute; inset: 0; background: #000; opacity: .12; transition: opacity .55s; }
+.reel-card.on::after { opacity: 0; }
+.reel-card .play {
+  position: absolute; z-index: 1; left: 50%; bottom: 10px; transform: translateX(-50%); white-space: nowrap;
+  padding: 5px 10px; border-radius: 999px; background: rgba(0,0,0,.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  opacity: 0; transition: opacity .3s;
+}
+.reel-card.on .play { opacity: 1; }
+.reel-card:focus-visible { outline: 1px solid #fff; outline-offset: 2px; }
+.reel-rail { position: absolute; z-index: 2; }
+.reel-rail .nums { display: flex; justify-content: space-between; opacity: .8; font-variant-numeric: tabular-nums; }
+.reel-rail .bar { position: relative; margin-top: 8px; height: 1px; background: rgba(255,255,255,.25); }
+.reel-rail .bar i { position: absolute; top: 0; bottom: 0; background: #fff; transition: left .6s cubic-bezier(.2,.85,.25,1); }
+.reel-hint { position: absolute; z-index: 2; opacity: .6; text-align: right; }
+
+/* Phones and touch screens: keep the look, drop the per-frame cost.
+   No zooming background behind blend modes, no grain overlay, no live blur. */
+@media (hover: none), (max-width: 700px) {
+  .reel-bg img, .reel-bg.in img { transform: scale(1.28); transition: none; }
+  .reel-grain { display: none; }
+  .pill, .reel-card .play { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(0,0,0,.72); }
+  .album-head { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(8,8,7,.97); }
+  .pick img, .pick video { transition: none; }
+}
+
+/* theater: the full film, with sound */
+.theater { position: fixed; inset: 0; z-index: 70; background: rgba(5,5,5,.97); display: grid; place-items: center;
+  padding: max(56px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(64px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.theater[hidden] { display: none !important; }
+.theater video { max-width: 100%; max-height: 100%; background: #000; border-radius: 3px; }
+.th-close { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: max(18px, env(safe-area-inset-right, 0px)); font-size: 2.2rem; font-weight: 300; line-height: 1; }
+.th-close:hover { color: var(--warm); }
+.th-title { position: absolute; top: max(22px, calc(env(safe-area-inset-top, 0px) + 10px)); left: max(20px, env(safe-area-inset-left, 0px)); right: 70px; opacity: .7; margin: 0; }
+.th-nav { position: absolute; bottom: max(20px, env(safe-area-inset-bottom, 0px)); left: 0; right: 0; display: flex; justify-content: center; gap: 28px; }
+@media (prefers-reduced-motion: reduce) {
+  .reel-bg, .reel-bg img, .reel-track, .reel-card, .reel-title .ln span, .reel-meta span, .reel-rail .bar i { transition: none !important; }
+}
+
+/* ================= about + contact ================= */
+.about {
+  position: relative; scroll-snap-align: start;
+  border-top: 0.5px solid var(--line);
+  padding-block: clamp(56px, 9vw, 120px) 0;
+  padding-left: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-right, 0px));
+}
+.about-grid {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) repeat(3, minmax(0, 1fr)); gap: 24px;
+}
+.about-grid > * { min-width: 0; }
+.statement {
+  grid-column: 1 / -1; margin: 0 0 clamp(48px, 7vw, 96px);
+  font-size: clamp(1.9rem, 4.6vw, 4.2rem); font-weight: 300; line-height: 1.08; letter-spacing: -0.035em;
+  max-width: 22ch; text-wrap: balance;
+}
+.statement em { font-style: normal; color: var(--warm); }
+.about-col h2 { margin: 0; font: inherit; opacity: .4; font-weight: 500; }
+.about-col ul { list-style: none; margin: 0; padding: 0; }
+.about-col .plain { opacity: .78; user-select: all; }
+.about-col p { margin: 0; opacity: .78; }
+.about-foot {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  margin-top: clamp(48px, 7vw, 96px); padding-block: 12px max(28px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+  border-top: 0.5px solid var(--line);
+}
+.about-foot span { opacity: .45; }
+@media (max-width: 720px) {
+  .about-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); row-gap: 28px; }
+  .about-col.wide { grid-column: 1 / -1; }
+}
+
+/* ================= album ================= */
+.album {
+  position: fixed; inset: 0; z-index: 50; background: var(--sheet); color: var(--ink);
+  opacity: 0; pointer-events: none; visibility: hidden;
+  transition: opacity .45s ease, visibility 0s linear .45s;
+}
+.album.open { opacity: 1; pointer-events: auto; visibility: visible; transition: opacity .45s ease; }
+.album-scroll { height: 100%; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.album-head {
+  position: sticky; top: 0; z-index: 2;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;
+  padding-block: max(clamp(22px, 3.4vw, 40px), calc(env(safe-area-inset-top, 0px) + 16px)) 20px;
+  padding-left: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-right, 0px));
+  background: rgba(8, 8, 7, 0.86); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.album-head > div { min-width: 0; }
+.album-head .mono { opacity: .45; margin: 0; font-variant-numeric: tabular-nums; }
+.album-title { margin: 10px 0 0; font-size: clamp(1.7rem, 4vw, 3rem); font-weight: 300; letter-spacing: -0.035em; line-height: 1.05; text-wrap: balance; }
+.album-sub { margin: 6px 0 0; color: var(--muted); font-size: 0.95rem; }
+.close { font-size: 2.4rem; line-height: 1; font-weight: 300; margin-top: -6px; opacity: .8; transition: transform .3s, opacity .3s, color .3s; }
+.close:hover, .close:focus-visible { transform: rotate(90deg); opacity: 1; color: var(--warm); outline: none; }
+.grid {
+  padding-block: 16px 40px;
+  padding-left: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-right, 0px));
+  columns: 3; column-gap: 14px;
+}
+.photo {
+  display: block; width: 100%; margin: 0 0 14px; padding: 0; break-inside: avoid;
+  overflow: hidden; border-radius: 3px; background: var(--surface); cursor: zoom-in;
+  animation: rise .6s cubic-bezier(.2, .7, .2, 1) both;
+}
+.photo img { display: block; width: 100%; height: auto; transition: transform .6s, filter .6s; }
+.photo:hover img { transform: scale(1.03); filter: brightness(1.06); }
+@keyframes rise { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+.album-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  margin-left: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-left, 0px));
+  margin-right: max(clamp(20px, 3.4vw, 44px), env(safe-area-inset-right, 0px));
+  border-top: 0.5px solid var(--line);
+  padding-block: 14px max(28px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+}
+.album-foot .tag { opacity: .45; text-align: center; min-width: 0; }
+@media (max-width: 1000px) { .grid { columns: 2; } }
+@media (max-width: 640px) { .grid { columns: 1; } .album-foot .tag { display: none; } }
+
+/* ================= full-size viewer ================= */
+.viewer {
+  position: fixed; inset: 0; z-index: 60; background: rgba(8, 8, 7, 0.97);
+  display: grid; place-items: center;
+  padding: max(56px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(56px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+}
+.viewer[hidden] { display: none !important; }
+.viewer img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 2px; }
+.v-close { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: max(18px, env(safe-area-inset-right, 0px)); font-size: 2.2rem; font-weight: 300; line-height: 1; }
+.v-close:hover { color: var(--warm); }
+.v-nav { position: absolute; top: 50%; transform: translateY(-50%); padding: 16px; opacity: .7; }
+.v-nav:hover { opacity: 1; }
+.v-prev { left: max(4px, env(safe-area-inset-left, 0px)); }
+.v-next { right: max(4px, env(safe-area-inset-right, 0px)); }
+.v-count { position: absolute; bottom: max(18px, env(safe-area-inset-bottom, 0px)); left: 0; right: 0; text-align: center; opacity: .45; font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .photo { animation: none; }
+  .album, .album.open { transition: none; }
+  .ulink { transition: none; }
+}
+</style>
+
+</head>
+<body>
+<!-- ================= hero ================= -->
+<header class="hero" id="top">
+  <canvas id="heroCanvas" aria-hidden="true"></canvas>
+  <h1 class="sr">Ishan Gautam — photographer and filmmaker</h1>
+  <div class="hero-top mono">
+    <div class="hero-brand">
+      <strong>Ishan Gautam</strong>
+      <span>Photographer &amp; filmmaker · Mumbai · NIFT</span>
+    </div>
+    <nav class="hero-col" aria-label="Work">
+      <h2>Work</h2>
+      <ul>
+        <li><a class="ulink" href="#works" data-view="photo">Photography</a></li>
+        <li><a class="ulink" href="#films" data-view="video">Videography</a></li>
+        <li><a class="ulink" href="https://ishan4145.github.io/Portfolio/" target="_blank" rel="noopener">Archive</a></li>
+      </ul>
+    </nav>
+    <nav class="hero-col" aria-label="Studio">
+      <h2>Studio</h2>
+      <ul>
+        <li><a class="ulink" href="#about">About</a></li>
+        <li><a class="ulink" href="#about">Commissions</a></li>
+      </ul>
+    </nav>
+    <nav class="hero-col" aria-label="Contact">
+      <h2>Contact</h2>
+      <ul>
+        <li><span class="plain">ishangautam41@gmail.com</span></li>
+        <li><span class="plain">+91 79993 06922</span></li>
+        <li><a class="ulink" href="https://www.instagram.com/_ishanig_/" target="_blank" rel="noopener">Instagram</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="hero-rule mono">
+    <span class="hint" id="heroHint">Move over the name</span>
+    <a class="ulink" href="#choose">Selected work ↓</a>
+  </div>
+</header>
+
+<!-- ================= works ================= -->
+<!-- ================= chooser ================= -->
+<section class="choose" id="choose" aria-label="Choose what to see">
+  <div class="choose-head">
+    <h2 class="choose-q">What would you like to see?</h2>
+    <span class="mono">Pick one · switch any time</span>
+  </div>
+  <div class="choose-grid">
+    <button type="button" class="pick" data-view="photo" aria-pressed="false">
+      <img src="works/streetwear/5.jpg" alt="" loading="lazy">
+      <span class="pick-label"><span><span class="mono">01 · 6 projects · 66 photos</span><strong>Photography</strong></span><span class="pick-arrow">→</span></span>
+    </button>
+    <button type="button" class="pick" data-view="video" aria-pressed="false">
+      <video src="films/dermaco.mp4" poster="films/dermaco-poster.jpg" muted loop playsinline preload="metadata" id="pickVideo"></video>
+      <span class="pick-label"><span><span class="mono">02 · 12 films · ads &amp; influencer</span><strong>Videography</strong></span><span class="pick-arrow">→</span></span>
+    </button>
+  </div>
+</section>
+
+<section class="works" id="works" aria-label="Photography" hidden>
+  <div class="stage" id="stage" tabindex="0" role="listbox" aria-label="Photography projects">
+    <div class="wheel" id="wheel"></div>
+  </div>
+  <div class="ring-label" id="ringLabel">Photography</div>
+  <div class="front-title" id="frontTitle">
+    <div class="name" id="frontName"></div>
+    <div class="meta" id="frontMeta"></div>
+    <div class="count mono" id="frontCount"></div>
+  </div>
+  <div class="works-label mono"><strong>01 — Photography</strong><br><span>06 projects · 2026</span></div>
+  <button type="button" class="works-back mono ulink" data-back>↖ Back</button>
+  <button type="button" class="switch mono ulink" data-view="video">Switch to videography →</button>
+  <ol class="index mono" id="index"></ol>
+  <p class="works-hint mono" id="worksHint">Scroll or drag to turn · click the front card</p>
+</section>
+
+<!-- ================= videography ================= -->
+<section class="reel" id="films" aria-label="Videography" hidden>
+  <div class="reel-stage" id="reelStage" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Films">
+    <div id="reelBgs"></div>
+    <div class="reel-wash"></div>
+    <div class="reel-grain" aria-hidden="true"></div>
+    <div class="reel-top" id="reelTop">
+      <button type="button" data-back>↖ Back</button>
+      <div class="reel-brand">ISHAN — FILMS</div>
+      <button type="button" data-view="photo">Photos ☰</button>
+    </div>
+    <div class="reel-head" id="reelHead">
+      <div class="reel-head-row">
+        <h2 class="reel-title" id="reelTitle"></h2>
+        <p class="reel-credit mono" id="reelCredit"></p>
+        <div class="reel-meta mono" id="reelMeta"></div>
+      </div>
+    </div>
+    <div class="reel-strip" id="reelStrip"><div class="reel-track" id="reelTrack"></div></div>
+    <div class="reel-rail mono" id="reelRail"><div class="nums"><span id="reelNow">01</span><span id="reelAll">12</span></div><div class="bar"><i id="reelBar"></i></div></div>
+    <p class="reel-hint mono" id="reelHint">Drag or scroll the strip · tap the tall card to watch</p>
+  </div>
+</section>
+
+<div class="theater" id="theater" hidden role="dialog" aria-label="Film">
+  <p class="th-title mono" id="thTitle"></p>
+  <video id="thVideo" controls playsinline></video>
+  <button class="th-close" id="thClose" type="button" aria-label="Close film">&times;</button>
+  <div class="th-nav mono"><button type="button" class="ulink" id="thPrev">← Previous film</button><button type="button" class="ulink" id="thNext">Next film →</button></div>
+</div>
+
+<!-- ================= about ================= -->
+<section class="about" id="about">
+  <p class="statement">Ishan Gautam weaves stories through lenses and frames: fashion, portraiture and film, shaped by <em>light</em> and heritage.</p>
+  <div class="about-grid mono">
+    <div class="about-col wide">
+      <h2>About</h2>
+      <p>Visual arts, NIFT Mumbai.<br>Based in Mumbai, shooting across India.</p>
+    </div>
+    <div class="about-col">
+      <h2>Fields</h2>
+      <ul><li>Fashion editorial</li><li>Portraiture</li><li>Bridal &amp; couple</li><li>Studio</li><li>Film</li></ul>
+    </div>
+    <div class="about-col">
+      <h2>Commissions</h2>
+      <p>Open for editorials, campaigns and portraits in 2026.</p>
+    </div>
+    <div class="about-col">
+      <h2>Contact</h2>
+      <ul>
+        <li><span class="plain">ishangautam41@gmail.com</span></li>
+        <li><span class="plain">+91 79993 06922</span></li>
+        <li><a class="ulink" href="https://www.instagram.com/_ishanig_/" target="_blank" rel="noopener">Instagram ↗</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="about-foot mono">
+    <span>©2026 Ishan Gautam · All rights reserved</span>
+    <a class="ulink" href="#top">Back to top ↑</a>
+  </div>
+</section>
+
+<!-- ================= album ================= -->
+<div class="album" id="album" role="dialog" aria-modal="true" aria-labelledby="albumTitle" aria-hidden="true">
+  <div class="album-scroll" id="albumScroll">
+    <header class="album-head">
+      <div>
+        <p class="mono" id="albumEyebrow"></p>
+        <h2 class="album-title" id="albumTitle"></h2>
+        <p class="album-sub" id="albumSub"></p>
+      </div>
+      <button class="close" id="albumClose" type="button" aria-label="Close project">&times;</button>
+    </header>
+    <div class="grid" id="albumGrid"></div>
+    <footer class="album-foot mono">
+      <button type="button" class="ulink" id="prevProject">← Previous</button>
+      <span class="tag" id="albumTag"></span>
+      <button type="button" class="ulink" id="nextProject">Next →</button>
+    </footer>
+  </div>
+</div>
+
+<div class="viewer" id="viewer" hidden role="dialog" aria-label="Photo">
+  <img id="viewerImg" alt="">
+  <button class="v-close" id="viewerClose" type="button" aria-label="Close photo">&times;</button>
+  <button class="v-nav v-prev mono" id="viewerPrev" type="button" aria-label="Previous photo">←</button>
+  <button class="v-nav v-next mono" id="viewerNext" type="button" aria-label="Next photo">→</button>
+  <div class="v-count mono" id="viewerCount"></div>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const css = getComputedStyle(document.documentElement);
+  const C = {
+    bg: css.getPropertyValue("--bg").trim() || "#0c0c0b",
+    ink: css.getPropertyValue("--ink").trim() || "#e9e4da",
+    warm: css.getPropertyValue("--warm").trim() || "#e9762b",
+  };
+  const reducedQ = matchMedia("(prefers-reduced-motion: reduce)");
+  const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const hex = h => { const m = /^#?([0-9a-f]{6})$/i.exec(h); return m ? [0, 2, 4].map(i => parseInt(m[1].slice(i, i + 2), 16)) : [233, 228, 218]; };
+
+  // ===================================================================
+  // HERO — halftone wordmark (ported from HalftoneWordmarkFooter) with a
+  // photo revealed inside the letters wherever the pointer goes.
+  // ===================================================================
+  const REVEAL_SRC = "ishan-cutout.png"; // Ishan with his rig: black and white, cut out, no backdrop
+  const FACE_Y = 0.17;                    // where his face sits in that cut-out, as a share of its height
+  const WORD = "ISHAN";
+  const hero = $("top"), canvas = $("heroCanvas"), ctx = canvas.getContext("2d");
+  const INK = hex(C.ink), WARM = hex(C.warm);
+  const CROP = 0.2, GRAIN = 0.5, WEIGHT = 800, FACE = '"Inter Tight", "Inter", "Helvetica Neue", Arial, sans-serif';
+
+  let w = 0, h = 0, dpr = 1, gap = 6, dots = new Float32Array(0), count = 0;
+  let px = -1e5, py = -1e5, raf = 0, visible = true, awake = true;
+  let ring = { x: 0, y: 0, t: -1 }, grainTile = null, mask = null, letterTop = 0;
+  let prepared = null, spot = null, reveal = 0, rx = 0, ry = 0, touchTimer = 0;
+  // No hover on phones: the spotlight drifts along the name by itself.
+  const ambient = matchMedia("(hover: none)").matches;
+  let faceX = 0, faceY = 0; // where the spotlight rests on a touch screen
+  let spotKey = "", grainPattern = null;
+  const photo = new Image();
+  photo.src = REVEAL_SRC;
+  photo.onload = () => { buildReveal(); wake(); };
+
+  const spotR = () => Math.max(170, Math.min(w, h) * (w < 720 ? 0.5 : 0.34));
+  const radiusFor = (cov, g) => Math.sqrt(clamp(cov, 0, 1)) * g * 0.56;
+
+  function layout() {
+    const rect = hero.getBoundingClientRect();
+    w = Math.max(1, Math.round(rect.width));
+    h = Math.max(1, Math.round(rect.height));
+    dpr = Math.min(window.devicePixelRatio || 1, ambient ? 1.5 : 2);
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    gap = w < 720 ? 4 : 6;
+
+    mask = document.createElement("canvas");
+    mask.width = w; mask.height = h;
+    const m = mask.getContext("2d", { willReadFrequently: true });
+    m.font = `${WEIGHT} 100px ${FACE}`;
+    const fit = (w * 1.02 / Math.max(1, m.measureText(WORD).width)) * 100;
+    m.font = `${WEIGHT} ${fit}px ${FACE}`;
+    const box = m.measureText(WORD);
+    const cap = box.actualBoundingBoxAscent || fit * 0.72;
+    const baseline = h + cap * CROP;
+    letterTop = baseline - cap;
+    m.fillStyle = "#000"; m.textBaseline = "alphabetic";
+    m.fillText(WORD, (w - box.width) / 2, baseline);
+    const img = m.getImageData(0, 0, w, h).data;
+
+    const cols = Math.ceil(w / gap), rows = Math.ceil(h / gap), tmp = [];
+    const startRow = Math.max(0, Math.floor((letterTop - gap * 2) / gap));
+    for (let gy = startRow; gy < rows; gy++) {
+      for (let gx = 0; gx < cols; gx++) {
+        let sum = 0;
+        for (let sy = 0; sy < 3; sy++) for (let sx = 0; sx < 3; sx++) {
+          const x = Math.min(w - 1, Math.floor(gx * gap + ((sx + 0.5) * gap) / 3));
+          const y = Math.min(h - 1, Math.floor(gy * gap + ((sy + 0.5) * gap) / 3));
+          sum += img[(y * w + x) * 4 + 3];
+        }
+        const cov = sum / (9 * 255);
+        if (cov < 0.06) continue;
+        const hx = gx * gap + gap / 2, hy = gy * gap + gap / 2;
+        tmp.push(hx, hy, 0, 0, hx, hy, radiusFor(cov, gap));
+      }
+    }
+    dots = new Float32Array(tmp); count = tmp.length / 7;
+
+    grainTile = document.createElement("canvas");
+    grainTile.width = grainTile.height = 256;
+    const g = grainTile.getContext("2d"), id = g.createImageData(256, 256);
+    for (let i = 0; i < id.data.length; i += 4) {
+      const v = Math.random() * 255;
+      id.data[i] = id.data[i + 1] = id.data[i + 2] = v;
+      id.data[i + 3] = Math.random() < 0.5 ? 0 : 255;
+    }
+    g.putImageData(id, 0, 0);
+    grainPattern = null;
+    buildReveal();
+    awake = true;
+  }
+
+  // The cut-out, standing in the middle of the name with his face in the
+  // upper half of the letters: a faint ghost outside them, full inside.
+  function buildReveal() {
+    if (!photo.complete || !photo.naturalWidth || !mask) return;
+    const pw = Math.round(w * dpr), ph = Math.round(h * dpr);
+    const bandH = h - letterTop;
+    const dh = Math.min(Math.max(bandH, h * 0.3) * 2.3, w * 1.1);
+    const dw = dh * (photo.naturalWidth / photo.naturalHeight);
+    const dx = w * 0.5 - dw * 0.58;
+    const dy = letterTop + bandH * 0.3 - dh * FACE_Y;
+    faceX = dx + dw * 0.62; faceY = letterTop + bandH * 0.3;
+
+    const inLetters = document.createElement("canvas");
+    inLetters.width = pw; inLetters.height = ph;
+    const il = inLetters.getContext("2d");
+    il.drawImage(photo, dx * dpr, dy * dpr, dw * dpr, dh * dpr);
+    il.globalCompositeOperation = "destination-in";
+    il.drawImage(mask, 0, 0, pw, ph);
+
+    prepared = document.createElement("canvas");
+    prepared.width = pw; prepared.height = ph;
+    const p = prepared.getContext("2d");
+    // On a phone the photo stays inside the letters only - no ghost above the
+    // name, which on a small screen reads as a smudge rather than a reveal.
+    p.globalAlpha = ambient ? 0 : 0.16;
+    p.drawImage(photo, dx * dpr, dy * dpr, dw * dpr, dh * dpr);
+    p.globalAlpha = 1;
+    p.drawImage(inLetters, 0, 0);
+
+    spotKey = "";
+    spot = document.createElement("canvas");
+    spot.width = pw; spot.height = ph;
+  }
+
+  function step(x, y, vx, vy, hx, hy, r) {
+    const dx = x - px, dy = y - py, d2 = dx * dx + dy * dy;
+    if (r > 0 && d2 < r * r) {
+      const d = Math.sqrt(d2) + 0.001, f = (1 - d / r) * 2.6;
+      vx += (dx / d) * f; vy += (dy / d) * f;
+    }
+    vx = (vx + (hx - x) * 0.05) * 0.84;
+    vy = (vy + (hy - y) * 0.05) * 0.84;
+    return [x + vx, y + vy, vx, vy];
+  }
+
+  function drawHero(now) {
+    const reduced = reducedQ.matches;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = C.bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // reveal: a soft spotlight that follows the pointer over the name
+    let tx = px, ty = py;
+    let pointerIn = px > -1e4 && py > letterTop - 120;
+    if (!pointerIn && ambient) {
+      // No hover on a phone: rest the spotlight on his face instead of animating
+      // it every frame, so the canvas can go to sleep.
+      tx = faceX; ty = faceY; pointerIn = true;
+    }
+    const want = pointerIn ? 1 : 0;
+    reveal += (want - reveal) * (reduced ? 1 : 0.08);
+    if (pointerIn) {
+      if (reveal < 0.02) { rx = tx; ry = ty; }
+      rx += (tx - rx) * (reduced ? 1 : 0.18);
+      ry += (ty - ry) * (reduced ? 1 : 0.18);
+    }
+    let revealMoving = Math.abs(want - reveal) > 0.004 || (pointerIn && Math.abs(tx - rx) + Math.abs(ty - ry) > 0.5);
+    if (reveal > 0.004 && prepared && spot) {
+      const s = spot.getContext("2d");
+      const R = spotR() * dpr;
+      // Rebuild the spotlight only when it has moved or faded; otherwise the
+      // last one is reused as is.
+      const key = `${Math.round(rx)},${Math.round(ry)},${reveal.toFixed(2)}`;
+      if (key !== spotKey) {
+      spotKey = key;
+      s.globalCompositeOperation = "source-over";
+      s.clearRect(0, 0, spot.width, spot.height);
+      const g = s.createRadialGradient(rx * dpr, ry * dpr, 0, rx * dpr, ry * dpr, R);
+      g.addColorStop(0, `rgba(0,0,0,${reveal})`);
+      g.addColorStop(0.5, `rgba(0,0,0,${reveal * 0.85})`);
+      g.addColorStop(1, "rgba(0,0,0,0)");
+      s.fillStyle = g;
+      s.fillRect(0, 0, spot.width, spot.height);
+      s.globalCompositeOperation = "source-in";
+      s.drawImage(prepared, 0, 0);
+      }
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.drawImage(spot, 0, 0);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    const r = reduced ? 0 : (w < 720 ? 60 : 90);
+    const SR = spotR(), fadeOn = reveal > 0.01 && prepared;
+    const ringAge = ring.t < 0 ? 1e9 : now - ring.t, ringR = ringAge * 0.9;
+    let moving = false;
+    const restPath = new Path2D();
+    for (let i = 0; i < count; i++) {
+      const j = i * 7;
+      let x = dots[j], y = dots[j + 1], vx = dots[j + 2], vy = dots[j + 3];
+      const hx = dots[j + 4], hy = dots[j + 5];
+      if (!reduced) {
+        if (ringAge < 900) {
+          const dx = hx - ring.x, dy = hy - ring.y, d = Math.sqrt(dx * dx + dy * dy) + 0.001;
+          const band = 1 - Math.min(1, Math.abs(d - ringR) / 26);
+          if (band > 0) { const f = band * 3.2 * (1 - ringAge / 900); vx += (dx / d) * f; vy += (dy / d) * f; }
+        }
+        [x, y, vx, vy] = step(x, y, vx, vy, hx, hy, r);
+        if (Math.abs(vx) + Math.abs(vy) > 0.02 || Math.abs(x - hx) + Math.abs(y - hy) > 0.05) moving = true;
+        else { x = hx; y = hy; vx = 0; vy = 0; }
+        dots[j] = x; dots[j + 1] = y; dots[j + 2] = vx; dots[j + 3] = vy;
+      }
+      const k = Math.min(1, Math.hypot(x - hx, y - hy) / 28);
+      let alpha = 1;
+      if (fadeOn) {
+        const q = 1 - Math.hypot(x - rx, y - ry) / (SR * 0.75);
+        // Phones keep more of each dot, so ISHAN still reads with the photo inside it.
+        if (q > 0) alpha = 1 - (ambient ? 0.5 : 0.88) * reveal * Math.min(1, q * 1.6);
+      }
+      if (k <= 0.02 && alpha === 1) {
+        // At home and untouched: add to one shared path, filled once below.
+        // Thousands of separate fills per frame is what makes a phone stutter.
+        restPath.moveTo(x + dots[j + 6], y);
+        restPath.arc(x, y, dots[j + 6], 0, 6.2832);
+        continue;
+      }
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = k > 0.02
+        ? `rgb(${Math.round(INK[0] + (WARM[0] - INK[0]) * k)},${Math.round(INK[1] + (WARM[1] - INK[1]) * k)},${Math.round(INK[2] + (WARM[2] - INK[2]) * k)})`
+        : C.ink;
+      ctx.beginPath();
+      ctx.arc(x, y, dots[j + 6], 0, 6.2832);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = C.ink;
+    ctx.fill(restPath);
+
+    // Print grain: skipped on phones, where an overlay blend across the whole
+    // canvas every frame costs more than it shows at that size.
+    if (grainTile && GRAIN > 0 && !ambient) {
+      ctx.globalAlpha = GRAIN * 0.09;
+      ctx.globalCompositeOperation = "overlay";
+      const pattern = grainPattern || (grainPattern = ctx.createPattern(grainTile, "repeat"));
+      if (pattern) { ctx.fillStyle = pattern; ctx.fillRect(0, 0, w, h); }
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "source-over";
+    }
+    awake = moving || revealMoving || ringAge < 900 || px > -1e4;
+  }
+
+  const heroLoop = now => {
+    raf = 0;
+    if (!visible) return;
+    drawHero(now);
+    if (awake) raf = requestAnimationFrame(heroLoop);
+  };
+  function wake() { awake = true; if (!raf && visible) raf = requestAnimationFrame(heroLoop); }
+
+  const local = e => { const b = canvas.getBoundingClientRect(); return [e.clientX - b.left, e.clientY - b.top]; };
+  // Mouse: hover moves the reveal and the dots. Touch: only a tap does - a
+  // finger that is scrolling the page must not set off the animation.
+  let tap = null;
+  hero.addEventListener("pointermove", e => {
+    if (e.pointerType === "touch") return;
+    [px, py] = local(e); wake();
+  });
+  hero.addEventListener("pointerleave", e => { if (e.pointerType !== "touch") { px = py = -1e5; wake(); } });
+  hero.addEventListener("pointerdown", e => {
+    if (e.target.closest("a,button")) return;
+    if (e.pointerType === "touch") { tap = { x: e.clientX, y: e.clientY, t: performance.now() }; return; }
+    [px, py] = local(e);
+    if (!reducedQ.matches) ring = { x: px, y: py, t: performance.now() };
+    wake();
+  });
+  hero.addEventListener("pointerup", e => {
+    if (e.pointerType !== "touch" || !tap) return;
+    const moved = Math.hypot(e.clientX - tap.x, e.clientY - tap.y), quick = performance.now() - tap.t < 500;
+    tap = null;
+    if (moved > 10 || !quick) return;
+    [px, py] = local(e);
+    if (!reducedQ.matches) ring = { x: px, y: py, t: performance.now() };
+    clearTimeout(touchTimer);
+    touchTimer = setTimeout(() => { px = py = -1e5; wake(); }, 2200);
+    wake();
+  });
+  hero.addEventListener("pointercancel", () => { tap = null; });
+
+  // Re-set the dots only when the size really changes: a phone's toolbar
+  // sliding in and out nudges the height by a few px on every scroll.
+  let lastW = 0, lastH = 0;
+  new ResizeObserver(() => {
+    const r = hero.getBoundingClientRect();
+    if (Math.abs(r.width - lastW) < 1 && Math.abs(r.height - lastH) < 60) return;
+    lastW = r.width; lastH = r.height; layout(); wake();
+  }).observe(hero);
+  new IntersectionObserver(es => { visible = es[0] ? es[0].isIntersecting : true; if (visible) wake(); }).observe(hero);
+  layout(); drawHero(performance.now()); wake();
+  // Re-set the word once the real face has loaded.
+  if (document.fonts && document.fonts.load) {
+    document.fonts.load(`${WEIGHT} 100px "Inter Tight"`).then(() => document.fonts.ready).then(() => { layout(); wake(); }).catch(() => {});
+  }
+  if (matchMedia("(hover: none)").matches) $("heroHint").textContent = "Touch the name";
+
+  // ===================================================================
+  // WORKS — projects and the wheel
+  // ===================================================================
+  const P = [853, 1280], L = [1280, 853];
+  const RAW = [
+    { slug: "mercedes-amg", title: "Mercedes-AMG G-Class", tagline: "Signal green and street style: a portrait session with the G.", albumTitle: "Automotive portraiture", cover: 1, sizes: [[1600,1067],[1600,1067],[1173,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600]] },
+    { slug: "mercedes-event", title: "V-Class Launch", tagline: "Mercedes-Benz V-Class: a launch evening, lit low and sharp.", albumTitle: "Launch event coverage", cover: 1, sizes: [[1600,1067],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1600,1067]] },
+    { slug: "streetwear", title: "Streetwear", tagline: "Denim, jerseys and attitude: studio editorials with a street edge.", albumTitle: "Streetwear editorials", cover: 5, sizes: [[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1539,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1067,1600],[1600,1429],[1067,1600],[1600,1067],[1600,1067],[1067,1600]] },
+    { slug: "indian-aesthetic", title: "Indian Aesthetic", tagline: "Silk, temple light and sea breeze: heritage in still frames.", albumTitle: "Ethereal cultural portraiture", cover: 4, sizes: [[967,1280],[853,1280],[1280,802],[1280,853],[978,1280],[956,1280],[1280,1070],[1600,1067],[1280,853],[1600,1067]] },
+    { slug: "light-play", title: "Light Play", tagline: "Veils, flowers and a single beam of teal light.", albumTitle: "The beauty of controlled chaos", cover: 4, sizes: [[853,1280],[1600,1067],[1280,853],[1280,853],[1280,853]] },
+    { slug: "captured-essence", title: "E-com Shoot", tagline: "Clean studio frames built for the product page.", albumTitle: "Studio magic, one shot at a time", cover: 8, sizes: [P, P, P, P, P, P, P, L, P, L] },
+  ];
+  const src = (slug, n) => `works/${slug}/${n}.jpg`;
+  const PROJECTS = RAW.map(p => ({ ...p, coverSrc: src(p.slug, p.cover), photos: p.sizes.map(([pw, ph], i) => ({ src: src(p.slug, i + 1), w: pw, h: ph })) }));
+  const count7 = PROJECTS.length, last = count7 - 1;
+  const two = n => String(n).padStart(2, "0");
+
+  const CARD_H = 0.38, CARD_MAX_W = 0.34, CARD_RATIO = 1.45, STEP = 40, DRUM = 2.22, LENS = 2.7,
+        RING_R = 1.14, RING_MAX_SCALE = 0.42, BOW = 1.82, TITLE = 0.124, CULL = 1.6,
+        WHEEL_UNITS = 900, DRAG_UNITS = 420, SETTLE = 140;
+  const rad = d => (d * Math.PI) / 180;
+  const bowAt = (deg, bow) => -bow * (1 - Math.cos(rad(deg)));
+  const place = (ringDeg, drumDeg, ringR, drumR, bow, m) =>
+    `translateX(${m * bowAt(drumDeg, bow)}px) rotateZ(${(1 - m) * ringDeg}deg) translateY(${-(1 - m) * ringR}px) rotateX(${m * drumDeg}deg) translateZ(${m * drumR}px)`;
+
+  const worksLabel = document.querySelector(".works-label");
+  const works = $("works"), stage = $("stage"), wheel = $("wheel"), ringLabel = $("ringLabel"),
+        frontTitle = $("frontTitle"), indexEl = $("index");
+  const arrow = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  let turn = 0, target = 0, active = -1, metrics = null, drag = null, travel = 0, isNarrow = false;
+  const to = next => { target = clamp(next, 0, last + 1); };
+
+  const cards = PROJECTS.map((p, i) => {
+    const a = document.createElement("a");
+    a.className = "card"; a.id = `works-wheel-${i}`; a.href = `#${p.slug}`;
+    a.setAttribute("role", "option"); a.tabIndex = -1; a.draggable = false;
+    a.innerHTML = `<span class="face"><img src="${p.coverSrc}" alt="${p.title}" draggable="false"><span class="pill">${arrow}View project</span></span>`;
+    a.addEventListener("click", e => {
+      e.preventDefault();
+      if (travel > 6) return;
+      if (target >= 1 && Math.round(target) - 1 === i) openProject(i); else to(i + 1);
+    });
+    wheel.appendChild(a);
+    return a;
+  });
+  const indexBtns = PROJECTS.map((p, i) => {
+    const li = document.createElement("li"), b = document.createElement("button");
+    b.type = "button"; b.textContent = p.title;
+    b.addEventListener("click", () => to(i + 1));
+    li.appendChild(b); indexEl.appendChild(li);
+    return b;
+  });
+
+  function measure() {
+    const sw = stage.clientWidth, sh = stage.clientHeight, narrow = sw < 700;
+    works.classList.toggle("narrow", narrow);
+    isNarrow = narrow;
+    const cardW = Math.min(sh * CARD_H * CARD_RATIO, sw * (narrow ? 0.76 : CARD_MAX_W)), cardH = cardW / CARD_RATIO;
+    const ringR0 = narrow ? Math.min(sw, sh) * 0.36 : cardH * RING_R;
+    const ringScale = clamp((((2 * Math.PI * ringR0) / count7) * 0.82) / (cardW || 1), 0.16, RING_MAX_SCALE);
+    const ringFit = Math.max(0, sh / 2 - (cardH * ringScale) / 2 - sh * 0.05);
+    metrics = {
+      cardW, cardH, ringScale, ringR: Math.min(ringR0, ringFit),
+      drumR: cardH * DRUM, bow: narrow ? cardH * 0.9 : cardH * BOW, depth: cardH * LENS,
+      title: narrow ? clamp(sw * 0.09, 28, 42) : cardH * TITLE,
+    };
+    stage.style.perspective = `${metrics.depth}px`;
+    for (const c of cards) {
+      c.style.width = `${cardW}px`; c.style.height = `${cardH}px`;
+      c.style.marginLeft = `${-cardW / 2}px`; c.style.marginTop = `${-cardH / 2}px`;
+    }
+    ringLabel.style.fontSize = `${narrow ? clamp(sw * 0.058, 19, 28) : metrics.title}px`;
+    $("frontName").style.fontSize = `${metrics.title}px`;
+  }
+
+  function setActive(n) {
+    if (n === active) return;
+    active = n;
+    const p = PROJECTS[n];
+    $("frontName").textContent = p.title;
+    $("frontMeta").textContent = p.tagline;
+    $("frontCount").textContent = `${two(n + 1)} / ${two(count7)} · ${p.photos.length} photos`;
+    stage.setAttribute("aria-activedescendant", `works-wheel-${n}`);
+    cards.forEach((c, i) => c.setAttribute("aria-selected", String(i === n)));
+    indexBtns.forEach((b, i) => b.setAttribute("aria-current", String(i === n)));
+  }
+
+  let wheelDirty = true, wheelOnScreen = false;
+  function drawWheel() {
+    requestAnimationFrame(drawWheel);
+    if (!metrics || works.hidden || !wheelOnScreen) return;
+    const gapT = target - turn;
+    // At rest and nothing changed: skip the frame entirely.
+    if (Math.abs(gapT) < 0.0005 && !wheelDirty) return;
+    wheelDirty = false;
+    if (Math.abs(gapT) < 0.0005) turn = target; else turn += gapT * (reducedQ.matches ? 1 : 0.12);
+    const m = clamp(turn, 0, 1), pos = Math.max(0, turn - 1);
+    const { ringR, ringScale, drumR, bow } = metrics;
+    wheel.style.transform = `translateZ(${-m * drumR}px)`;
+    const frontIdx = target >= 1 ? Math.round(target) - 1 : -1;
+    for (let i = 0; i < count7; i++) {
+      const d = i - pos, card = cards[i];
+      card.style.transform = place(d * (360 / count7), d * STEP, ringR, drumR, bow, m);
+      // On a phone the neighbours stay as a hint of the drum, dimmed, so the
+      // front card reads first and they don't crowd the labels.
+      card.style.opacity = m > 0.5 && Math.abs(d) > CULL ? "0"
+        : String(isNarrow ? 1 - m * Math.min(1, Math.abs(d)) * 0.65 : 1);
+      card.style.zIndex = String(Math.round(100 - Math.abs(d) * 2));
+      card.firstElementChild.style.transform = `scale(${lerp(ringScale, 1, m)})`;
+      card.classList.toggle("front", i === frontIdx && m > 0.98);
+    }
+    ringLabel.style.opacity = String(1 - m);
+    worksLabel.style.opacity = isNarrow ? String(1 - m) : "1";
+    frontTitle.style.opacity = String(m);
+    setActive(clamp(Math.round(pos), 0, last));
+  }
+
+  // The wheel only takes the scroll while its section fills the screen, and
+  // only while it still has somewhere to turn - so the page scrolls on past it.
+  let settling = 0;
+  stage.addEventListener("wheel", e => {
+    if (albumOpen) return;
+    const r = works.getBoundingClientRect();
+    if (Math.abs(r.top) > innerHeight * 0.12) return;
+    const next = target + e.deltaY / WHEEL_UNITS;
+    if (next > 0 && next < last + 1) {
+      e.preventDefault();
+      if (Math.abs(r.top) > 1) window.scrollTo({ top: window.scrollY + r.top, behavior: "auto" });
+    }
+    to(next);
+    clearTimeout(settling);
+    settling = setTimeout(() => to(Math.round(target)), SETTLE);
+  }, { passive: false });
+
+  // Mouse: drag up/down. Touch: swipe sideways (vertical swipes scroll the page).
+  stage.addEventListener("pointerdown", e => { drag = { x: e.clientX, y: e.clientY, touch: e.pointerType === "touch" }; travel = 0; });
+  stage.addEventListener("pointermove", e => {
+    if (!drag) return;
+    const d = drag.touch ? (drag.x - e.clientX) * 1.6 : drag.y - e.clientY;
+    travel += Math.abs(d);
+    if (travel > 6 && !stage.hasPointerCapture(e.pointerId)) { try { stage.setPointerCapture(e.pointerId); } catch (_) {} }
+    to(target + d / DRAG_UNITS);
+    drag.x = e.clientX; drag.y = e.clientY;
+  });
+  const release = () => { if (!drag) return; drag = null; if (target > 1 || travel > 6) to(Math.max(1, Math.round(target))); };
+  stage.addEventListener("pointerup", release);
+  stage.addEventListener("pointercancel", release);
+  stage.addEventListener("keydown", e => {
+    if (e.key === "ArrowDown" || e.key === "ArrowRight") to(Math.round(target) + 1);
+    else if (e.key === "ArrowUp" || e.key === "ArrowLeft") to(Math.round(target) - 1);
+    else if (e.key === "Enter" && target >= 1) openProject(active);
+    else return;
+    e.preventDefault();
+  });
+  new ResizeObserver(() => { measure(); wheelDirty = true; }).observe(stage);
+  new IntersectionObserver(es => { wheelOnScreen = es[0].isIntersecting; wheelDirty = true; }).observe(works);
+  measure();
+  requestAnimationFrame(drawWheel);
+  if (matchMedia("(hover: none)").matches) $("reelHint").textContent = "Swipe the strip · tap the tall card to watch";
+  if (matchMedia("(hover: none)").matches) $("worksHint").textContent = "Swipe sideways to turn · tap the front card";
+
+  // ===================================================================
+  // ALBUM + VIEWER
+  // ===================================================================
+  const album = $("album"), albumScroll = $("albumScroll"), grid = $("albumGrid");
+  let albumOpen = false, openIdx = -1, lastFocus = null, vIdx = -1;
+
+  function renderAlbum(i) {
+    const p = PROJECTS[i];
+    $("albumEyebrow").textContent = `Photography · ${two(i + 1)} / ${two(count7)} · ${p.photos.length} photos`;
+    $("albumTitle").textContent = p.title;
+    $("albumSub").textContent = p.albumTitle;
+    $("albumTag").textContent = p.tagline;
+    grid.innerHTML = "";
+    p.photos.forEach((ph, n) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "photo";
+      b.style.animationDelay = `${120 + n * 70}ms`;
+      b.setAttribute("aria-label", `Open ${p.title}, photo ${n + 1} of ${p.photos.length}`);
+      b.innerHTML = `<img src="${ph.src}" width="${ph.w}" height="${ph.h}" alt="${p.title} — photo ${n + 1}" loading="${n < 3 ? "eager" : "lazy"}">`;
+      b.addEventListener("click", () => openViewer(n));
+      grid.appendChild(b);
+    });
+    albumScroll.scrollTop = 0;
+  }
+  function show(i) {
+    if (i < 0) { hide(); return; }
+    openIdx = i; renderAlbum(i); to(i + 1);
+    if (!albumOpen) lastFocus = document.activeElement;
+    albumOpen = true;
+    document.body.classList.add("locked");
+    album.classList.add("open"); album.setAttribute("aria-hidden", "false");
+    $("albumClose").focus({ preventScroll: true });
+  }
+  function hide() {
+    closeViewer();
+    if (!albumOpen) return;
+    albumOpen = false; openIdx = -1;
+    document.body.classList.remove("locked");
+    album.classList.remove("open"); album.setAttribute("aria-hidden", "true");
+    (lastFocus && lastFocus.focus ? lastFocus : stage).focus({ preventScroll: true });
+  }
+  const slugIndex = () => PROJECTS.findIndex(p => `#${p.slug}` === location.hash);
+  function setHash(hh, replace) {
+    try { const url = location.pathname + location.search + hh; replace ? history.replaceState(null, "", url) : history.pushState(null, "", url); } catch (_) {}
+  }
+  function openProject(i) { setHash(`#${PROJECTS[i].slug}`, false); show(i); }
+  function closeProject() { setHash("", false); hide(); }
+  function stepProject(dir) { if (openIdx < 0) return; const n = (openIdx + dir + count7) % count7; setHash(`#${PROJECTS[n].slug}`, true); show(n); }
+  const onRoute = () => { const i = slugIndex(); if (i >= 0 && view !== "photo") showView("photo", false); if (i >= 0 || albumOpen) show(i); };
+  window.addEventListener("hashchange", onRoute);
+  window.addEventListener("popstate", onRoute);
+  $("albumClose").addEventListener("click", closeProject);
+  $("prevProject").addEventListener("click", () => stepProject(-1));
+  $("nextProject").addEventListener("click", () => stepProject(1));
+
+  const viewer = $("viewer"), viewerImg = $("viewerImg");
+  function openViewer(n) {
+    vIdx = n;
+    const p = PROJECTS[openIdx], ph = p.photos[n];
+    viewerImg.src = ph.src; viewerImg.alt = `${p.title} — photo ${n + 1}`;
+    $("viewerCount").textContent = `${two(n + 1)} / ${two(p.photos.length)}`;
+    viewer.hidden = false;
+    $("viewerClose").focus({ preventScroll: true });
+  }
+  function closeViewer() { if (vIdx < 0) return; vIdx = -1; viewer.hidden = true; }
+  const vStep = dir => { const len = PROJECTS[openIdx].photos.length; openViewer((vIdx + dir + len) % len); };
+  $("viewerClose").addEventListener("click", closeViewer);
+  $("viewerPrev").addEventListener("click", () => vStep(-1));
+  $("viewerNext").addEventListener("click", () => vStep(1));
+  viewer.addEventListener("click", e => { if (e.target === viewer) closeViewer(); });
+  let sx = null;
+  viewer.addEventListener("touchstart", e => { sx = e.touches[0].clientX; }, { passive: true });
+  viewer.addEventListener("touchend", e => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(dx) > 50) vStep(dx < 0 ? 1 : -1); });
+
+  window.addEventListener("keydown", e => {
+    if (vIdx >= 0) {
+      if (e.key === "Escape") closeViewer(); else if (e.key === "ArrowRight") vStep(1); else if (e.key === "ArrowLeft") vStep(-1); else return;
+      e.preventDefault();
+    } else if (albumOpen) {
+      if (e.key === "Escape") closeProject(); else if (e.key === "ArrowRight") stepProject(1); else if (e.key === "ArrowLeft") stepProject(-1); else return;
+      e.preventDefault();
+    }
+  });
+
+  // ===================================================================
+  // CHOOSER — nothing below the landing page until the visitor picks.
+  // ===================================================================
+  const choose = $("choose"), filmsSec = $("films");
+  let view = "";
+  function showView(v, scroll = true) {
+    view = v;
+    works.hidden = v !== "photo";
+    filmsSec.hidden = v !== "video";
+    document.querySelectorAll(".pick").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.view === v)));
+    if (v === "photo") measure();
+    if (v === "video") { reelMeasure(); pickVideo.pause(); }
+    reelSync();
+    if (scroll) requestAnimationFrame(() => (v === "photo" ? works : filmsSec).scrollIntoView({ behavior: reducedQ.matches ? "auto" : "smooth" }));
+  }
+  document.addEventListener("click", e => {
+    const t = e.target.closest("[data-view]");
+    if (t) { e.preventDefault(); showView(t.dataset.view); return; }
+    if (e.target.closest("[data-back]")) { e.preventDefault(); choose.scrollIntoView({ behavior: reducedQ.matches ? "auto" : "smooth" }); }
+  });
+  const pickVideo = $("pickVideo");
+  new IntersectionObserver(es => { if (es[0].isIntersecting && view !== "video") { const p = pickVideo.play(); if (p && p.catch) p.catch(() => {}); } else pickVideo.pause(); }, { threshold: 0.3 }).observe(choose);
+
+  // ===================================================================
+  // VIDEOGRAPHY — the filmstrip reel. A port of HeroCarousel: every card
+  // shares one top edge, the focused card unfurls to full height and plays,
+  // and the whole background re-grades to that film's hue.
+  // ===================================================================
+  const FILMS = [
+    { slug: "dermaco", title: "The Derma\nCo.", credit: "OTT AD FILM.", meta: ["THE DERMA CO.", "0:20", "16:9"], accent: "#2f9e6a" },
+    { slug: "linen", title: "No\nStress", credit: "CONCEPT AD.", meta: ["LINEN DROP", "0:15", "4K"], accent: "#6f8f2a" },
+    { slug: "influencer", title: "Forever\nDiamond", credit: "INFLUENCER FILM.", meta: ["JEWELLERY", "0:51", "9:16"], accent: "#b8893a" },
+    { slug: "c0032", title: "Jorts", credit: "CONCEPT AD · TEASER.", meta: ["STREETWEAR", "0:24", "4K"], accent: "#d0314f" },
+    { slug: "donjulio", title: "Don\nJulio", credit: "INFLUENCER FILM.", meta: ["EVENT", "1:02", "9:16"], accent: "#1f9aa6" },
+    { slug: "c0109", title: "Emotion-\nless", credit: "CONCEPT AD.", meta: ["JERSEY DROP", "0:24", "4K"], accent: "#2e5a8c" },
+    { slug: "nykaa", title: "Nykaa", credit: "INFLUENCER FILM.", meta: ["BEAUTY", "0:55", "9:16"], accent: "#d4457a" },
+    { slug: "ybe", title: "YBE", credit: "CONCEPT AD · LAUNCH.", meta: ["YOUTH BEYOND EVERYTHING", "0:20"], accent: "#c92a2a" },
+    { slug: "ipop", title: "iPop\nIcon", credit: "INFLUENCER FILM.", meta: ["EXPERIENCE", "0:57", "9:16"], accent: "#6a4cff" },
+    { slug: "cococart", title: "Coco\ncart", credit: "INFLUENCER FILM.", meta: ["CAFÉ", "1:00", "9:16"], accent: "#c9757a" },
+    { slug: "freshpik", title: "Freshpik", credit: "INFLUENCER FILM.", meta: ["FOOD", "0:55", "9:16"], accent: "#b5a02a" },
+    { slug: "theatre", title: "Theatre", credit: "INFLUENCER FILM.", meta: ["LIFESTYLE", "0:52", "9:16"], accent: "#a5652b" },
+  ];
+  const flast = FILMS.length - 1;
+  const fimg = f => `films/${f.slug}-poster.jpg`, fvid = f => `films/${f.slug}.mp4`;
+  const reelStage = $("reelStage"), reelTrack = $("reelTrack"), reelStrip = $("reelStrip"), reelBgs = $("reelBgs");
+  const reelTitle = $("reelTitle"), reelCredit = $("reelCredit"), reelMeta = $("reelMeta");
+  const cardVideo = document.createElement("video");
+  cardVideo.muted = true; cardVideo.defaultMuted = true; cardVideo.setAttribute("muted", "");
+  cardVideo.loop = true; cardVideo.playsInline = true; cardVideo.setAttribute("playsinline", ""); cardVideo.preload = "none";
+  let loadTimer = 0;
+  let ri = 0, rbox = { w: 0, h: 0 }, rg = null, reelX = 0, rdrag = null, reelIn = false;
+
+  const reelCards = FILMS.map((f, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "reel-card";
+    b.setAttribute("aria-label", f.title.replace(/\n/g, " ").replace("- ", ""));
+    b.innerHTML = `<img src="${fimg(f)}" alt="" draggable="false" loading="${i < 4 ? "eager" : "lazy"}"><span class="play mono">▶ Watch</span>`;
+    b.addEventListener("click", () => { if (rdrag && rdrag.moved) return; i === ri ? openTheater(i) : reelGo(i); });
+    reelTrack.appendChild(b);
+    return b;
+  });
+  $("reelAll").textContent = two(FILMS.length);
+
+  function reelMeasure() {
+    rbox = { w: reelStage.clientWidth, h: reelStage.clientHeight };
+    if (!rbox.h) return;
+    const narrow = rbox.w < 700;
+    const fullH = clamp(rbox.h * (narrow ? 0.34 : 0.3), 120, 420), cardW = fullH * 0.75;
+    const gap = Math.max(4, Math.round(cardW * 0.038)), pad = Math.max(16, Math.round(rbox.w * 0.017));
+    const label = Math.max(9, Math.round(rbox.h * 0.0103));
+    const stripTop = narrow ? 0.46 : 0.5;
+    rg = { fullH, halfH: fullH / 2, cardW, gap, step: cardW + gap, pad, label, stripTop };
+    reelStrip.style.top = `${stripTop * 100}%`; reelStrip.style.height = `${fullH}px`;
+    reelTrack.style.gap = `${gap}px`;
+    reelCards.forEach(c => { c.style.width = `${cardW}px`; });
+    const top = $("reelTop");
+    top.style.top = `${Math.max(16, rbox.h * 0.029)}px`; top.style.gap = `${Math.max(20, rbox.w * 0.06)}px`;
+    top.querySelectorAll("button").forEach(b => b.style.fontSize = `${label * 1.15}px`);
+    top.querySelector(".reel-brand").style.fontSize = `${label * 1.35}px`;
+    const head = $("reelHead");
+    head.style.height = `${stripTop * 100}%`; head.style.padding = `0 ${pad}px ${Math.round(rbox.h * 0.028)}px`;
+    reelTitle.style.fontSize = `${Math.max(30, Math.round(rbox.h * (narrow ? 0.06 : 0.067)))}px`;
+    reelCredit.style.fontSize = reelMeta.style.fontSize = `${label}px`;
+    reelMeta.style.gap = `${Math.max(16, rbox.w * 0.055)}px`;
+    const rail = $("reelRail");
+    rail.style.left = `${pad}px`; rail.style.bottom = `${Math.max(14, rbox.h * 0.022)}px`; rail.style.width = `${Math.max(140, rbox.w * 0.2)}px`; rail.style.fontSize = `${label}px`;
+    const hint = $("reelHint");
+    hint.style.right = `${pad}px`; hint.style.bottom = `${Math.max(14, rbox.h * 0.022)}px`; hint.style.fontSize = `${label}px`; hint.style.maxWidth = `${rbox.w * 0.5}px`;
+    reelLayout(true);
+  }
+  const xFor = i => rbox.w / 2 - (i * rg.step + rg.cardW / 2);
+  function reelLayout(instant) {
+    if (!rg) return;
+    if (instant) { reelTrack.classList.add("dragging"); }
+    reelX = xFor(ri);
+    reelTrack.style.transform = `translateX(${reelX}px)`;
+    reelCards.forEach((c, i) => { c.style.height = `${i === ri ? rg.fullH : rg.halfH}px`; c.classList.toggle("on", i === ri); c.setAttribute("aria-current", String(i === ri)); });
+    if (instant) { reelTrack.offsetHeight; reelTrack.classList.remove("dragging"); }
+  }
+  function reelText() {
+    const f = FILMS[ri];
+    reelTitle.classList.remove("go"); reelMeta.classList.remove("go");
+    reelTitle.innerHTML = f.title.split("\n").map((l, k) => `<span class="ln"><span style="transition-delay:${k * 70}ms">${l}</span></span>`).join("");
+    reelCredit.textContent = f.credit;
+    reelMeta.innerHTML = f.meta.map((m, k) => `<span style="transition-delay:${120 + k * 60}ms">${m}</span>`).join("");
+    requestAnimationFrame(() => requestAnimationFrame(() => { reelTitle.classList.add("go"); reelMeta.classList.add("go"); }));
+    $("reelNow").textContent = two(ri + 1);
+    const bar = $("reelBar"); bar.style.width = `${100 / FILMS.length}%`; bar.style.left = `${(ri / FILMS.length) * 100}%`;
+    // background: the poster blown up and re-hued to the film's accent
+    const layer = document.createElement("div");
+    layer.className = "reel-bg";
+    layer.innerHTML = `<img src="${fimg(f)}" alt="" draggable="false"><div class="hue" style="background:${f.accent}"></div><div class="mul" style="background:${f.accent}"></div>`;
+    reelBgs.appendChild(layer);
+    requestAnimationFrame(() => requestAnimationFrame(() => layer.classList.add("in")));
+    const old = [...reelBgs.children].slice(0, -1);
+    setTimeout(() => old.forEach(o => o.remove()), 800);
+  }
+  function reelGo(n) {
+    n = clamp(n, 0, flast);
+    if (n === ri && cardVideo.parentNode) return;
+    ri = n; reelLayout(false); reelText(); reelSync();
+  }
+  function reelSync() {
+    const card = reelCards[ri], f = FILMS[ri];
+    const live = reelIn && !filmsSec.hidden && thIdx < 0;
+    clearTimeout(loadTimer);
+    if (cardVideo.parentNode !== card) {
+      // Flicking through the strip must not start a download per card: show the
+      // poster now, fetch the film only once this card has stayed in front.
+      cardVideo.pause(); cardVideo.removeAttribute("src"); cardVideo.load();
+      cardVideo.poster = fimg(f);
+      card.insertBefore(cardVideo, card.querySelector(".play"));
+      cardVideo.dataset.slug = "";
+    }
+    if (!live) { cardVideo.pause(); return; }
+    loadTimer = setTimeout(() => {
+      if (cardVideo.dataset.slug !== f.slug) { cardVideo.src = fvid(f); cardVideo.dataset.slug = f.slug; }
+      const p = cardVideo.play(); if (p && p.catch) p.catch(() => {});
+    }, 450);
+  }
+  // wheel + trackpad: either axis steps the strip; hands back to the page at the ends
+  let racc = 0, runtil = 0;
+  reelStage.addEventListener("wheel", e => {
+    const r = filmsSec.getBoundingClientRect();
+    if (Math.abs(r.top) > innerHeight * 0.12) return;
+    const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    if ((d > 0 && ri === flast) || (d < 0 && ri === 0)) { racc = 0; return; }
+    e.preventDefault();
+    if (e.timeStamp < runtil) return;
+    racc += d;
+    if (Math.abs(racc) < 60) return;
+    reelGo(ri + Math.sign(racc)); racc = 0; runtil = e.timeStamp + 420;
+  }, { passive: false });
+  // drag the strip
+  reelStrip.addEventListener("pointerdown", e => {
+    rdrag = { x0: e.clientX, x: e.clientX, t: performance.now(), v: 0, base: reelX, moved: false, id: e.pointerId };
+  });
+  reelStrip.addEventListener("pointermove", e => {
+    if (!rdrag) return;
+    const dx = e.clientX - rdrag.x0;
+    if (!rdrag.moved && Math.abs(dx) > 6) { rdrag.moved = true; reelTrack.classList.add("dragging"); try { reelStrip.setPointerCapture(rdrag.id); } catch (_) {} }
+    if (!rdrag.moved) return;
+    const now = performance.now(); rdrag.v = (e.clientX - rdrag.x) / Math.max(1, now - rdrag.t); rdrag.x = e.clientX; rdrag.t = now;
+    const lo = xFor(flast), hi = xFor(0);
+    let x = rdrag.base + dx;
+    if (x > hi) x = hi + (x - hi) * 0.08; if (x < lo) x = lo + (x - lo) * 0.08;
+    reelX = x; reelTrack.style.transform = `translateX(${x}px)`;
+  });
+  const reelRelease = () => {
+    if (!rdrag) return;
+    const d = rdrag; setTimeout(() => { rdrag = null; }, 0);
+    if (!d.moved) return;
+    reelTrack.classList.remove("dragging");
+    const thrown = reelX + d.v * 120;
+    const n = clamp(Math.round((rbox.w / 2 - thrown - rg.cardW / 2) / rg.step), 0, flast);
+    if (n === ri) reelLayout(false); else reelGo(n);
+  };
+  reelStrip.addEventListener("pointerup", reelRelease);
+  reelStrip.addEventListener("pointercancel", reelRelease);
+  reelStage.addEventListener("keydown", e => {
+    const k = { ArrowLeft: ri - 1, ArrowRight: ri + 1, Home: 0, End: flast }[e.key];
+    if (k !== undefined) { e.preventDefault(); reelGo(k); }
+    else if (e.key === "Enter" && e.target === reelStage) { e.preventDefault(); openTheater(ri); }
+  });
+  new ResizeObserver(reelMeasure).observe(reelStage);
+  new IntersectionObserver(es => { reelIn = es[0].isIntersecting; reelSync(); }, { threshold: 0.3 }).observe(reelStage);
+  reelText();
+
+  // theater: the full film, with sound
+  const theater = $("theater"), thVideo = $("thVideo");
+  let thIdx = -1;
+  function openTheater(i) {
+    thIdx = (i + FILMS.length) % FILMS.length;
+    const f = FILMS[thIdx];
+    cardVideo.pause();
+    thVideo.src = fvid(f); thVideo.poster = fimg(f);
+    $("thTitle").textContent = `${two(thIdx + 1)} / ${two(FILMS.length)} · ${f.title.replace(/-?\n/g, (m) => m.startsWith("-") ? "" : " ")} · ${f.credit.replace(/\.$/, "")}`;
+    theater.hidden = false; document.body.classList.add("locked");
+    thVideo.muted = false; const p = thVideo.play(); if (p && p.catch) p.catch(() => {});
+    $("thClose").focus({ preventScroll: true });
+  }
+  function closeTheater() {
+    if (thIdx < 0) return;
+    const was = thIdx; thIdx = -1;
+    thVideo.pause(); thVideo.removeAttribute("src"); thVideo.load();
+    theater.hidden = true; document.body.classList.remove("locked");
+    if (was !== ri) reelGo(was); else reelSync();
+  }
+  $("thClose").addEventListener("click", closeTheater);
+  $("thPrev").addEventListener("click", () => openTheater(thIdx - 1));
+  $("thNext").addEventListener("click", () => openTheater(thIdx + 1));
+  theater.addEventListener("click", e => { if (e.target === theater) closeTheater(); });
+  window.addEventListener("keydown", e => {
+    if (thIdx < 0) return;
+    if (e.key === "Escape") closeTheater(); else if (e.key === "ArrowRight") openTheater(thIdx + 1); else if (e.key === "ArrowLeft") openTheater(thIdx - 1); else return;
+    e.preventDefault(); e.stopImmediatePropagation();
+  }, true);
+
+  const start = slugIndex();
+  if (start >= 0) { showView("photo", false); turn = start + 1; show(start); }
+  else if (location.hash === "#films") showView("video", false);
+  else if (location.hash === "#works") showView("photo", false);
+})();
+</script>
+
+</body>
+</html>
