@@ -67,6 +67,14 @@ a { color: inherit; text-decoration: none; }
   background: var(--bg); touch-action: pan-y;
 }
 .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; }
+/* the 3D character standing on the name, following the cursor */
+.hero canvas.char {
+  inset: auto; left: 50%; top: 0; width: 300px; height: 335px; z-index: 1; pointer-events: none;
+  transform: translateX(-50%); opacity: 0; transition: opacity .8s ease;
+  -webkit-mask-image: linear-gradient(to bottom, #000 84%, transparent 99%);
+          mask-image: linear-gradient(to bottom, #000 84%, transparent 99%);
+}
+.hero canvas.char.on { opacity: 1; }
 .hero-top {
   position: relative; z-index: 1;
   display: grid; grid-template-columns: minmax(0, 1.25fr) repeat(3, minmax(0, 1fr)); gap: 24px;
@@ -87,7 +95,7 @@ a { color: inherit; text-decoration: none; }
 }
 .hero-rule .hint { opacity: .45; }
 @media (max-width: 720px) {
-  .hero { height: min(100svh, max(360px, 64vw + 150px)); }
+  .hero { height: min(100svh, max(420px, 64vw + 330px)); }
   .hero-top { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); row-gap: 18px; }
   .hero-brand { grid-column: 1 / -1; }
 }
@@ -435,6 +443,115 @@ body.menu-open .menu { opacity: 1; visibility: visible; transition: opacity .35s
   .about-col.wide { grid-column: 1 / -1; }
 }
 
+/* --- about, the interactive parts --- */
+.about-kicker { display: flex; justify-content: space-between; gap: 16px; margin: 0 0 clamp(20px, 3vw, 36px); }
+.about-kicker span { opacity: .45; text-align: right; }
+.about-kicker strong { white-space: nowrap; }
+.statement .w { opacity: .16; transition: opacity .5s ease; }
+.statement .w.lit { opacity: 1; }
+.statement .kw {
+  cursor: pointer; color: inherit;
+  font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em;
+  background-image: linear-gradient(currentColor, currentColor); background-repeat: no-repeat;
+  background-position: 100% 92%; background-size: 0% 1px;
+  transition: opacity .5s ease, color .3s, background-size .45s cubic-bezier(.2,.7,.1,1);
+}
+.statement .kw:hover, .statement .kw:focus-visible { color: var(--warm); background-position: 0 92%; background-size: 100% 1px; outline: none; }
+.statement em.kw { color: var(--warm); }
+
+.stats {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 0.5px solid var(--line);
+  margin-bottom: clamp(48px, 7vw, 96px);
+}
+.stat { padding: clamp(16px, 2vw, 24px) 0 0; border-left: 0.5px solid var(--line); padding-left: clamp(14px, 1.8vw, 24px); }
+.stat:first-child { border-left: 0; padding-left: 0; }
+.stat b { display: block; font-size: clamp(2.6rem, 6.6vw, 6rem); font-weight: 300; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat b sup { font-size: .38em; color: var(--warm); vertical-align: top; margin-left: .06em; position: relative; top: .3em; }
+.stat .mono { opacity: .45; display: block; margin-top: 10px; }
+@media (max-width: 720px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 22px; } .stat:nth-child(3) { border-left: 0; padding-left: 0; } }
+
+.shoots { margin-bottom: clamp(48px, 7vw, 96px); }
+.shoots h2 { margin: 0 0 14px; }
+.shoots ol { list-style: none; margin: 0; padding: 0; border-top: 0.5px solid var(--line); }
+.shoot {
+  position: relative; display: grid; grid-template-columns: 3.2em minmax(0, 1fr) auto auto; align-items: center; gap: clamp(12px, 2vw, 28px);
+  width: 100%; padding: clamp(16px, 2.2vw, 26px) 0; border-bottom: 0.5px solid var(--line); text-align: left; overflow: hidden;
+}
+.shoot::before {
+  content: ""; position: absolute; inset: 0; background: var(--ink); z-index: 0;
+  transform: scaleY(0); transform-origin: bottom; transition: transform .5s cubic-bezier(.2,.7,.1,1);
+}
+.shoot > * { position: relative; z-index: 1; transition: color .35s, transform .5s cubic-bezier(.2,.7,.1,1), opacity .35s; }
+.shoot .n { opacity: .45; }
+.shoot .t { font-size: clamp(1.5rem, 3.6vw, 3.2rem); font-weight: 300; letter-spacing: -0.04em; line-height: 1.05; }
+.shoot .t small { display: block; margin-top: 6px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; opacity: .45; }
+.shoot .c { opacity: .6; white-space: nowrap; }
+.shoot .a { font-size: clamp(1.2rem, 2vw, 1.8rem); font-weight: 300; }
+.shoot .th { display: none; width: 64px; height: 80px; object-fit: cover; border-radius: 3px; }
+@media (hover: hover) {
+  .shoot:hover::before, .shoot:focus-visible::before { transform: scaleY(1); transform-origin: top; }
+  .shoot:hover > *, .shoot:focus-visible > * { color: var(--bg); }
+  .shoot:hover .t, .shoot:focus-visible .t { transform: translateX(14px); }
+  .shoot:hover .a, .shoot:focus-visible .a { transform: translateX(-6px) rotate(-45deg); }
+  .shoot:hover .n, .shoot:hover .t small, .shoot:hover .c { opacity: .7; }
+}
+@media (hover: none), (max-width: 640px) {
+  .shoot { grid-template-columns: minmax(0, 1fr) auto; }
+  .shoot .n, .shoot .c { display: none; }
+  .shoot .th { display: block; }
+  .shoot .a { display: none; }
+}
+
+/* the photo that trails the pointer over keywords and rows */
+.peek {
+  position: fixed; left: 0; top: 0; z-index: 120; width: clamp(180px, 18vw, 280px); aspect-ratio: 4 / 5;
+  pointer-events: none; border-radius: 4px; overflow: hidden; background: var(--surface);
+  opacity: 0; transform: translate3d(-50%, -50%, 0) scale(.85); transition: opacity .3s ease, scale .3s ease;
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,.7);
+}
+.peek.on { opacity: 1; scale: 1.18; }
+.peek img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (hover: none) { .peek { display: none; } }
+
+.about-col .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.copy {
+  display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 999px; border: 0.5px solid var(--line);
+  font-size: 9.5px; opacity: .7; transition: opacity .2s, border-color .2s, color .2s;
+}
+.copy:hover { opacity: 1; border-color: var(--warm); color: var(--warm); }
+.copy.done { color: #3ccf6e; border-color: #3ccf6e; opacity: 1; }
+.avail { display: flex; align-items: center; gap: 8px; margin-top: 12px; opacity: .9; }
+.about-col p.clock { margin-top: 2px; opacity: .45; }
+.avail i { width: 6px; height: 6px; border-radius: 50%; background: #3ccf6e; box-shadow: 0 0 0 0 rgba(60,207,110,.5); animation: pulse 2s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(60,207,110,0); } 100% { box-shadow: 0 0 0 0 rgba(60,207,110,0); } }
+.clock { font-variant-numeric: tabular-nums; }
+
+.cta-big {
+  display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap;
+  margin-top: clamp(56px, 8vw, 112px); padding-top: clamp(20px, 2.6vw, 30px); border-top: 0.5px solid var(--line);
+}
+.cta-big .mono { opacity: .45; }
+.cta-link {
+  position: relative; display: inline-block; text-wrap: balance;
+  font-size: clamp(2.6rem, 8.4vw, 8rem); font-weight: 300; letter-spacing: -0.055em; line-height: .95;
+}
+.cta-link em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+.cta-link .arr { display: inline-block; color: var(--warm); transition: transform .5s cubic-bezier(.2,.7,.1,1); }
+.cta-link:hover .arr { transform: translate(.12em, -.12em) rotate(-45deg); }
+.cta-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: -.08em; height: 2px; background: var(--warm); transform: scaleX(0); transform-origin: right; transition: transform .6s cubic-bezier(.2,.7,.1,1); }
+.cta-link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.toast {
+  position: fixed; left: 50%; bottom: max(24px, env(safe-area-inset-bottom, 0px)); z-index: 300;
+  padding: 10px 16px; border-radius: 999px; background: var(--ink); color: var(--bg);
+  transform: translate(-50%, 20px); opacity: 0; transition: opacity .3s, transform .3s; pointer-events: none;
+}
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) {
+  .statement .w { opacity: 1; transition: none; }
+  .avail i { animation: none; }
+}
+
 /* ================= album ================= */
 .album {
   position: fixed; inset: 0; top: calc(var(--hh) + env(safe-area-inset-top, 0px)); z-index: 210; background: var(--sheet); color: var(--ink);
@@ -545,6 +662,7 @@ body.menu-open .menu { opacity: 1; visibility: visible; transition: opacity .35s
 <!-- ================= hero ================= -->
 <div class="hero" id="top">
   <canvas id="heroCanvas" aria-hidden="true"></canvas>
+  <canvas id="charCanvas" class="char" aria-hidden="true"></canvas>
   <h1 class="sr">Ishan Gautam — photographer and filmmaker</h1>
 </div>
 
@@ -625,7 +743,26 @@ body.menu-open .menu { opacity: 1; visibility: visible; transition: opacity .35s
 
 <!-- ================= about ================= -->
 <section class="about" id="about">
-  <p class="statement">Ishan Gautam weaves stories through lenses and frames: fashion, portraiture and film, shaped by <em>light</em> and heritage.</p>
+  <p class="about-kicker mono"><strong>03 — About</strong><span>Mumbai · NIFT · since the first frame</span></p>
+  <p class="statement" id="statement">Ishan Gautam weaves stories through lenses and frames: <a class="kw" href="#streetwear" data-img="works/streetwear/5.jpg">fashion</a>, <a class="kw" href="#indian-aesthetic" data-img="works/indian-aesthetic/4.jpg">portraiture</a> and <a class="kw" href="#films" data-view="video" data-img="films/dermaco-poster.jpg">film</a>, shaped by <a class="kw" href="#light-play" data-img="works/light-play/4.jpg"><em>light</em></a> and <a class="kw" href="#indian-aesthetic" data-img="works/indian-aesthetic/1.jpg">heritage</a>.</p>
+
+  <div class="stats" id="stats">
+    <div class="stat"><b data-count="66">0</b><span class="mono">Photographs</span></div>
+    <div class="stat"><b data-count="12">0</b><span class="mono">Films</span></div>
+    <div class="stat"><b data-count="10" data-plus>0</b><span class="mono">Brands</span></div>
+    <div class="stat"><b data-count="6">0</b><span class="mono">Photo projects</span></div>
+  </div>
+
+  <div class="shoots">
+    <h2 class="mono" style="opacity:.45;font-weight:500">What I shoot</h2>
+    <ol>
+      <li><a class="shoot" href="#streetwear" data-img="works/streetwear/5.jpg"><span class="n mono">01</span><span class="t">Fashion &amp; streetwear<small>Streetwear · E-com shoot</small></span><span class="c mono">36 photos</span><span class="a">→</span><img class="th" src="works/streetwear/5.jpg" alt="" loading="lazy"></a></li>
+      <li><a class="shoot" href="#mercedes-amg" data-img="works/mercedes-amg/1.jpg"><span class="n mono">02</span><span class="t">Automotive<small>Mercedes-AMG G-Class · V-Class launch</small></span><span class="c mono">15 photos</span><span class="a">→</span><img class="th" src="works/mercedes-amg/1.jpg" alt="" loading="lazy"></a></li>
+      <li><a class="shoot" href="#indian-aesthetic" data-img="works/indian-aesthetic/4.jpg"><span class="n mono">03</span><span class="t">Portrait &amp; heritage<small>Indian aesthetic · Light play</small></span><span class="c mono">15 photos</span><span class="a">→</span><img class="th" src="works/indian-aesthetic/4.jpg" alt="" loading="lazy"></a></li>
+      <li><a class="shoot" href="#films" data-view="video" data-img="films/nykaa-poster.jpg"><span class="n mono">04</span><span class="t">Ad &amp; influencer films<small>The Derma Co. · Nykaa · Don Julio · Cococart</small></span><span class="c mono">12 films</span><span class="a">→</span><img class="th" src="films/nykaa-poster.jpg" alt="" loading="lazy"></a></li>
+    </ol>
+  </div>
+
   <div class="about-grid mono">
     <div class="about-col wide">
       <h2>About</h2>
@@ -633,26 +770,36 @@ body.menu-open .menu { opacity: 1; visibility: visible; transition: opacity .35s
     </div>
     <div class="about-col">
       <h2>Fields</h2>
-      <ul><li>Fashion editorial</li><li>Portraiture</li><li>Bridal &amp; couple</li><li>Studio</li><li>Film</li></ul>
+      <ul><li>Fashion editorial</li><li>Portraiture</li><li>Automotive</li><li>Ad films</li><li>Studio</li></ul>
     </div>
     <div class="about-col">
       <h2>Commissions</h2>
-      <p>Open for editorials, campaigns and portraits in 2026.</p>
+      <p>Open for editorials, campaigns and films in 2026.</p>
+      <p class="avail"><i aria-hidden="true"></i>Available now</p>
+      <p class="clock" id="clock">Mumbai</p>
     </div>
     <div class="about-col">
       <h2>Contact</h2>
       <ul>
-        <li><span class="plain">ishangautam41@gmail.com</span></li>
-        <li><span class="plain">+91 79993 06922</span></li>
+        <li class="row"><a class="ulink" href="mailto:ishangautam41@gmail.com">ishangautam41@gmail.com</a><button type="button" class="copy" data-copy="ishangautam41@gmail.com">Copy</button></li>
+        <li class="row"><a class="ulink" href="tel:+917999306922">+91 79993 06922</a><button type="button" class="copy" data-copy="+91 79993 06922">Copy</button></li>
         <li><a class="ulink" href="https://www.instagram.com/_ishanig_/" target="_blank" rel="noopener">Instagram ↗</a></li>
       </ul>
     </div>
   </div>
+
+  <div class="cta-big">
+    <a class="cta-link" href="mailto:ishangautam41@gmail.com?subject=Project%20enquiry">Let’s make <em>something</em>&nbsp;<span class="arr">→</span></a>
+    <span class="mono">Reply within a day</span>
+  </div>
+
   <div class="about-foot mono">
     <span>©2026 Ishan Gautam · All rights reserved</span>
     <a class="ulink" href="#top">Back to top ↑</a>
   </div>
 </section>
+<div class="peek" id="peek" aria-hidden="true"><img alt=""></div>
+<div class="toast mono" id="toast" role="status"></div>
 
 <!-- ================= album ================= -->
 <div class="album" id="album" role="dialog" aria-modal="true" aria-labelledby="albumTitle" aria-hidden="true">
@@ -776,6 +923,7 @@ body.menu-open .menu { opacity: 1; visibility: visible; transition: opacity .35s
     grainPattern = null;
     buildReveal();
     awake = true;
+    if (charReady) placeChar();
   }
 
   // The cut-out, standing in the middle of the name with his face in the
@@ -979,6 +1127,193 @@ body.menu-open .menu { opacity: 1; visibility: visible; transition: opacity .35s
   if (document.fonts && document.fonts.load) {
     document.fonts.load(`${WEIGHT} 100px "Inter Tight"`).then(() => document.fonts.ready).then(() => { layout(); wake(); }).catch(() => {});
   }
+
+  // ===================================================================
+  // CHARACTER — Ishan as a 3D character standing on his name. Eyes follow
+  // the cursor quickly, the head follows it slowly, he blinks now and then,
+  // and closes his eyes with a grin when the cursor rests on his face.
+  // Two layers (body, head) cut from one render; the irises are drawn here.
+  // ===================================================================
+  var charReady = false;
+  const cv = $("charCanvas"), cx2 = cv.getContext("2d");
+  const G = { frame: [412, 40, 806, 901], head: [640, 40], body: [412, 400], pivot: [840, 468],
+    eyes: [
+      { A: [754, 251.5], B: [808, 258], up: [778, 232], lo: [783, 274.5], iris: [785.4, 253.2], r: 12.2, rx: 9.5, ry: 3.2 },
+      { A: [856.5, 262.2], B: [907.5, 270.3], up: [869, 243], lo: [866, 290], iris: [875.8, 264], r: 12.2, rx: 9, ry: 3.4 },
+    ] };
+  const headImg = new Image(), bodyImg = new Image();
+  let loaded = 0, cScale = 1, cDpr = 1, cVisible = true, cRaf = 0, cPos = { x: 0, y: 0 };
+  const S = { ex: 0, ey: 0, hx: 0, hy: 0, blink: 0, happy: 0 };   // what is drawn
+  const T = { x: 0, y: 0, happy: 0 };                             // where he wants to look
+  let lastDrawn = "", lastMove = -1e9, nextBlink = performance.now() + 1800, blinkT = -1, idleNext = 0;
+  const onLoad = () => { if (++loaded === 2) { charReady = true; placeChar(); cv.classList.add("on"); kick(); } };
+  headImg.onload = bodyImg.onload = onLoad;
+  headImg.src = "char/head.webp"; bodyImg.src = "char/body.webp";
+
+  function placeChar() {
+    if (!loaded || !w) return;
+    const top = (document.getElementById("siteHead")?.offsetHeight || 64) + (w < 720 ? 8 : 14);
+    const overlap = (h - letterTop) * (w < 720 ? 0.5 : 0.42);       // he stands a little behind the letters
+    let ch = Math.max(160, letterTop + overlap - top);
+    let cw = ch * (G.frame[2] / G.frame[3]);
+    if (cw > w * 0.92) { cw = w * 0.92; ch = cw * (G.frame[3] / G.frame[2]); }
+    cv.style.width = `${cw}px`; cv.style.height = `${ch}px`;
+    cv.style.top = `${letterTop + overlap - ch}px`;
+    cPos = { x: (w - cw) / 2, y: letterTop + overlap - ch };
+    cDpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.round(cw * cDpr); cv.height = Math.round(ch * cDpr);
+    cScale = cv.width / G.frame[2];
+    lastDrawn = ""; kick();
+  }
+
+  function quad(p, a, c, b) { p.quadraticCurveTo(c[0], c[1], b[0], b[1]); }
+  function almond(e) { const p = new Path2D(); p.moveTo(e.A[0], e.A[1]); quad(p, e.A, e.up, e.B); quad(p, e.B, e.lo, e.A); p.closePath(); return p; }
+  G.eyes.forEach(e => { e.path = almond(e); });
+  const mix = (a, b, t) => a + (b - a) * t;
+
+  function drawEye(c, e, lx, ly, shut, glee) {
+    c.save();
+    c.clip(e.path);
+    // iris + pupil
+    const ix = e.iris[0] + lx * e.rx, iy = e.iris[1] + ly * e.ry, r = e.r;
+    const g = c.createRadialGradient(ix, iy, 0, ix, iy, r);
+    g.addColorStop(0, "#060404"); g.addColorStop(0.4, "#0a0605");
+    g.addColorStop(0.47, "#4a2414"); g.addColorStop(0.72, "#7a4222");
+    g.addColorStop(0.9, "#5a2c16"); g.addColorStop(1, "#2a140b");
+    c.fillStyle = g; c.beginPath(); c.arc(ix, iy, r, 0, 6.2832); c.fill();
+    // the upper lid's shadow over the eye
+    const top = Math.min(e.A[1], e.B[1]) - 12, bot = Math.max(e.A[1], e.B[1]) + 8;
+    const sh = c.createLinearGradient(0, top, 0, bot);
+    sh.addColorStop(0, "rgba(60,24,12,0.55)"); sh.addColorStop(0.42, "rgba(60,24,12,0.08)"); sh.addColorStop(0.6, "rgba(60,24,12,0)");
+    c.fillStyle = sh; c.fillRect(e.A[0] - 4, top, e.B[0] - e.A[0] + 8, bot - top);
+    // catch-lights
+    c.fillStyle = "rgba(255,255,255,0.95)";
+    c.beginPath(); c.arc(ix + r * 0.36, iy - r * 0.36, r * 0.17, 0, 6.2832); c.fill();
+    c.fillStyle = "rgba(255,255,255,0.35)";
+    c.beginPath(); c.arc(ix - r * 0.3, iy + r * 0.3, r * 0.08, 0, 6.2832); c.fill();
+    // the lid coming down
+    if (shut > 0.01) {
+      const ctrl = [mix(e.up[0], e.lo[0], shut), mix(e.up[1], e.lo[1] + 3, shut)];
+      const lid = new Path2D(); lid.moveTo(e.A[0], e.A[1]);
+      lid.quadraticCurveTo(ctrl[0], ctrl[1], e.B[0], e.B[1]);
+      lid.lineTo(e.B[0] + 4, e.up[1] - 14); lid.lineTo(e.A[0] - 4, e.up[1] - 14); lid.closePath();
+      const lg = c.createLinearGradient(0, e.up[1] - 2, 0, e.lo[1]);
+      lg.addColorStop(0, "rgb(222,128,89)"); lg.addColorStop(1, "rgb(200,108,70)");
+      c.fillStyle = lg; c.fill(lid);
+      if (glee < 0.5 || shut < 0.75) {
+        const edge = new Path2D(); edge.moveTo(e.A[0], e.A[1]); edge.quadraticCurveTo(ctrl[0], ctrl[1], e.B[0], e.B[1]);
+        c.strokeStyle = "rgba(48,22,14,0.95)"; c.lineWidth = 2; c.stroke(edge);
+      }
+    }
+    c.restore();
+    // the lash line, crisp on top while the eye is open
+    if (shut < 0.75) {
+      const lash = new Path2D(); lash.moveTo(e.A[0], e.A[1]); quad(lash, e.A, e.up, e.B);
+      c.strokeStyle = `rgba(42,20,13,${0.9 * (1 - shut / 0.75)})`; c.lineWidth = 1.5; c.stroke(lash);
+    }
+    // a happy, closed eye: the lid all the way down and one arched lash line
+    if (glee > 0.5 && shut >= 0.75) {
+      const k = Math.min(1, (shut - 0.75) / 0.2);
+      const lg = c.createLinearGradient(0, e.up[1], 0, e.lo[1]);
+      lg.addColorStop(0, "rgb(220,126,87)"); lg.addColorStop(1, "rgb(203,110,71)");
+      c.globalAlpha = k;
+      c.save();
+      c.shadowColor = "rgb(212,118,79)"; c.shadowBlur = 4 * cScale * 2;
+      c.fillStyle = lg; c.strokeStyle = lg; c.lineWidth = 5; c.lineJoin = "round";
+      c.fill(e.path); c.stroke(e.path);
+      c.restore();
+      const midX = (e.A[0] + e.B[0]) / 2, y0 = Math.max(e.A[1], e.B[1]) + 3;
+      const arc = new Path2D(); arc.moveTo(e.A[0] + 2, e.A[1] + 6);
+      arc.quadraticCurveTo(midX, y0 - 22, e.B[0] - 2, e.B[1] + 6);
+      c.lineCap = "round"; c.strokeStyle = "rgba(38,17,10,0.95)"; c.lineWidth = 2.8; c.stroke(arc);
+      c.globalAlpha = 1;
+    }
+  }
+
+  function drawChar() {
+    const key = [S.ex, S.ey, S.hx, S.hy, S.blink, S.happy].map(v => v.toFixed(3)).join();
+    if (key === lastDrawn) return;
+    lastDrawn = key;
+    const c = cx2;
+    c.setTransform(1, 0, 0, 1, 0, 0);
+    c.clearRect(0, 0, cv.width, cv.height);
+    c.setTransform(cScale, 0, 0, cScale, -G.frame[0] * cScale, -G.frame[1] * cScale);
+    // body sways a hair the other way, for depth
+    c.save(); c.translate(-S.hx * 3, 0);
+    c.drawImage(bodyImg, G.body[0], G.body[1]);
+    c.restore();
+    // head: turns, nods and tilts about the neck
+    const [px0, py0] = G.pivot;
+    c.save();
+    c.translate(px0 + S.hx * 10, py0 + S.hy * 6 + S.happy * 4);
+    c.rotate((S.hx * 4.2 + S.happy * 5) * Math.PI / 180);
+    c.transform(1 - Math.abs(S.hx) * 0.035, S.hx * 0.035, 0, 1 - Math.abs(S.hy) * 0.03, 0, 0);
+    c.translate(-px0, -py0);
+    c.drawImage(headImg, G.head[0], G.head[1]);
+    const shut = Math.min(1, Math.max(S.blink, S.happy * 1.04));
+    const glee = S.happy > S.blink ? 1 : 0;
+    G.eyes.forEach(e => drawEye(c, e, S.ex, S.ey, shut, glee));
+    c.restore();
+    // he stands behind the name: cut the letters out of him
+    if (mask) {
+      c.setTransform(cDpr, 0, 0, cDpr, 0, 0);
+      c.globalCompositeOperation = "destination-out";
+      c.drawImage(mask, -cPos.x, -cPos.y);
+      c.globalCompositeOperation = "source-over";
+    }
+  }
+
+  // where the head sits on screen, to aim from
+  function headOnScreen() {
+    const b = cv.getBoundingClientRect(), k = b.width / G.frame[2];
+    return { x: b.left + (830 - G.frame[0]) * k, y: b.top + (260 - G.frame[1]) * k, r: 170 * k, b };
+  }
+  function aim(x, y) {
+    const hd = headOnScreen();
+    const dx = (x - hd.x) / Math.max(240, innerWidth * 0.42), dy = (y - hd.y) / Math.max(220, innerHeight * 0.45);
+    T.x = Math.tanh(dx * 1.5); T.y = Math.tanh(dy * 1.5);
+    T.happy = Math.hypot(x - hd.x, (y - hd.y) * 1.1) < hd.r * 0.62 ? 1 : 0;
+  }
+  addEventListener("pointermove", e => {
+    if (e.pointerType === "touch" || !charReady) return;
+    lastMove = performance.now(); aim(e.clientX, e.clientY); kick();
+  }, { passive: true });
+  addEventListener("pointerdown", e => {
+    if (!charReady || e.pointerType !== "touch") return;
+    lastMove = performance.now(); aim(e.clientX, e.clientY); T.happy = 0; kick();
+  }, { passive: true });
+  document.addEventListener("mouseleave", () => { T.x = T.y = T.happy = 0; kick(); });
+
+  let lastT = 0;
+  function charLoop(now) {
+    cRaf = 0;
+    const dt = Math.min(0.1, lastT ? (now - lastT) / 1000 : 1 / 60); lastT = now;
+    const ease = k => 1 - Math.pow(1 - k, dt * 60);   // same feel at any frame rate
+    if (!cVisible || !charReady) return;
+    const reduced = reducedQ.matches;
+    // idle: no pointer for a while → he glances around on his own
+    if (now - lastMove > 2600 && now > idleNext) {
+      const r = Math.random();
+      T.x = r < 0.3 ? 0 : (Math.random() * 1.6 - 0.8); T.y = Math.random() * 0.9 - 0.35; T.happy = 0;
+      idleNext = now + 1400 + Math.random() * 2200;
+    }
+    // blink: a quick close and open every few seconds, sometimes twice
+    if (blinkT < 0 && now > nextBlink) blinkT = now;
+    if (blinkT >= 0) {
+      const t = (now - blinkT) / 170;
+      S.blink = t < 0.45 ? t / 0.45 : Math.max(0, 1 - (t - 0.45) / 0.55);
+      if (t >= 1) { blinkT = -1; S.blink = 0; nextBlink = now + (Math.random() < 0.18 ? 220 : 2400 + Math.random() * 3600); }
+    }
+    const kE = reduced ? 1 : ease(0.22), kH = reduced ? 1 : ease(0.07);
+    S.ex += (T.x - S.ex) * kE; S.ey += (T.y - S.ey) * kE;
+    S.hx += (T.x * 0.7 - S.hx) * kH; S.hy += (T.y * 0.6 - S.hy) * kH;
+    S.happy += (T.happy - S.happy) * (reduced ? 1 : ease(0.14));
+    drawChar();
+    cRaf = requestAnimationFrame(charLoop);   // cheap: it only repaints when something moved
+  }
+  function kick() { if (!cRaf && cVisible && charReady) { lastT = 0; cRaf = requestAnimationFrame(charLoop); } }
+  new IntersectionObserver(es => { cVisible = es[0].isIntersecting; if (cVisible) kick(); }).observe(hero);
+  if (w) placeChar();
   
 
   // ===================================================================
@@ -1302,6 +1637,93 @@ body.menu-open .menu { opacity: 1; visibility: visible; transition: opacity .35s
     t.scrollIntoView({ behavior: smooth() });
   }));
   addEventListener("keydown", e => { if (e.key === "Escape" && document.body.classList.contains("menu-open")) closeMenu(); });
+
+  // ===================================================================
+  // ABOUT — the statement lights up word by word as you scroll; keywords
+  // and the "What I shoot" rows trail a photo; numbers count up; copy buttons.
+  // ===================================================================
+  const statement = $("statement");
+  (function splitWords(node) {
+    [...node.childNodes].forEach(n => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(t => {
+          if (!t) return;
+          if (/^\s+$/.test(t)) { frag.appendChild(document.createTextNode(t)); return; }
+          const sp = document.createElement("span"); sp.className = "w"; sp.textContent = t; frag.appendChild(sp);
+        });
+        n.replaceWith(frag);
+      } else if (n.classList && n.classList.contains("kw")) { n.classList.add("w"); }
+      else if (n.nodeType === 1) splitWords(n);
+    });
+  })(statement);
+  const words = [...statement.querySelectorAll(".w")];
+  let litN = -1, stTick = false;
+  function litWords() {
+    stTick = false;
+    const r = statement.getBoundingClientRect(), vh = innerHeight;
+    const prog = clamp((vh * 0.85 - r.top) / (r.height + vh * 0.35), 0, 1);
+    const n = reducedQ.matches ? words.length : Math.round(prog * words.length);
+    if (n === litN) return; litN = n;
+    words.forEach((w, k) => w.classList.toggle("lit", k < n));
+  }
+  addEventListener("scroll", () => { if (!stTick) { stTick = true; requestAnimationFrame(litWords); } }, { passive: true });
+  addEventListener("resize", litWords); litWords();
+
+  // the trailing photo (mouse only)
+  const peek = $("peek"), peekImg = peek.querySelector("img");
+  let pkx = 0, pky = 0, ptx = 0, pty = 0, pkRaf = 0, pkOn = false;
+  function pkLoop() {
+    pkx += (ptx - pkx) * 0.18; pky += (pty - pky) * 0.18;
+    peek.style.left = `${pkx}px`; peek.style.top = `${pky}px`;
+    pkRaf = pkOn || Math.abs(ptx - pkx) > 0.5 ? requestAnimationFrame(pkLoop) : 0;
+  }
+  if (matchMedia("(hover: hover)").matches) {
+    document.querySelectorAll("#about [data-img]").forEach(el => {
+      el.addEventListener("pointerenter", e => {
+        if (e.pointerType !== "mouse") return;
+        if (peekImg.getAttribute("src") !== el.dataset.img) peekImg.src = el.dataset.img;
+        if (!pkOn) { pkx = ptx = e.clientX; pky = pty = e.clientY; }
+        pkOn = true; peek.classList.add("on"); if (!pkRaf) pkRaf = requestAnimationFrame(pkLoop);
+      });
+      el.addEventListener("pointermove", e => { ptx = e.clientX; pty = e.clientY; });
+      el.addEventListener("pointerleave", () => { pkOn = false; peek.classList.remove("on"); });
+    });
+    addEventListener("scroll", () => { if (pkOn) { pkOn = false; peek.classList.remove("on"); } }, { passive: true });
+  }
+
+  // numbers count up the first time they show
+  const statsEl = $("stats");
+  new IntersectionObserver((es, io) => {
+    if (!es[0].isIntersecting) return; io.disconnect();
+    statsEl.querySelectorAll("[data-count]").forEach((b, k) => {
+      const to = +b.dataset.count, plus = b.hasAttribute("data-plus") ? "<sup>+</sup>" : "";
+      if (reducedQ.matches) { b.innerHTML = two(to) + plus; return; }
+      const t0 = performance.now() + k * 120, dur = 1400;
+      (function step(now) {
+        const t = clamp((now - t0) / dur, 0, 1), e = 1 - Math.pow(1 - t, 3);
+        b.innerHTML = two(Math.round(to * e)) + (t === 1 ? plus : "");
+        if (t < 1) requestAnimationFrame(step);
+      })(performance.now());
+    });
+  }, { threshold: 0.4 }).observe(statsEl);
+
+  // live Mumbai time
+  const clockEl = $("clock");
+  const fmt = new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hour12: true });
+  const tick = () => { clockEl.textContent = `${fmt.format(new Date()).toUpperCase()} · Mumbai`; };
+  tick(); setInterval(tick, 30000);
+
+  // copy email / phone
+  const toast = $("toast"); let toastT = 0;
+  function say(msg) { toast.textContent = msg; toast.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(() => toast.classList.remove("on"), 1800); }
+  document.querySelectorAll(".copy").forEach(btn => btn.addEventListener("click", async () => {
+    const v = btn.dataset.copy;
+    try { await navigator.clipboard.writeText(v); }
+    catch (_) { const ta = document.createElement("textarea"); ta.value = v; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (__) {} ta.remove(); }
+    btn.textContent = "Copied ✓"; btn.classList.add("done"); say(`Copied ${v}`);
+    setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("done"); }, 1800);
+  }));
 
   // ===================================================================
   // BRANDS — two bands drifting opposite ways; they stop when off screen.
